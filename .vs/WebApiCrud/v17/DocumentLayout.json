@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\models\\addemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\models\\addemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\models\\updateemploteedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\models\\updateemploteedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\models\\entities\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\models\\entities\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\webapicrud.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\webapicrud.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|c:\\users\\asus\\source\\repos\\webapicrud\\webapicrud\\migrations\\20240610164342_initial migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC099A97-6F39-4FBD-90AF-16911182C33A}|WebApiCrud\\WebApiCrud.csproj|solutionrelative:webapicrud\\migrations\\20240610164342_initial migration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +46,124 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UpdateEmploteeDto.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\UpdateEmploteeDto.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Models\\UpdateEmploteeDto.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\UpdateEmploteeDto.cs",
+              "RelativeToolTip": "WebApiCrud\\Models\\UpdateEmploteeDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T10:40:56.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AddEmployeeDto.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\AddEmployeeDto.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Models\\AddEmployeeDto.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\AddEmployeeDto.cs",
+              "RelativeToolTip": "WebApiCrud\\Models\\AddEmployeeDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T09:22:37.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmployeesController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Controllers\\EmployeesController.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Controllers\\EmployeesController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Controllers\\EmployeesController.cs",
+              "RelativeToolTip": "WebApiCrud\\Controllers\\EmployeesController.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAiwEMAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-11T08:52:15.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\Entities\\Employee.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Models\\Entities\\Employee.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Models\\Entities\\Employee.cs",
+              "RelativeToolTip": "WebApiCrud\\Models\\Entities\\Employee.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-10T15:45:07.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\appsettings.json",
+              "RelativeDocumentMoniker": "WebApiCrud\\appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\appsettings.json",
+              "RelativeToolTip": "WebApiCrud\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-10T15:52:54.196Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WebApiCrud.csproj",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\WebApiCrud.csproj",
+              "RelativeDocumentMoniker": "WebApiCrud\\WebApiCrud.csproj",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\WebApiCrud.csproj",
+              "RelativeToolTip": "WebApiCrud\\WebApiCrud.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-10T15:47:33.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "20240610164342_initial migration.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Migrations\\20240610164342_initial migration.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Migrations\\20240610164342_initial migration.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Migrations\\20240610164342_initial migration.cs",
+              "RelativeToolTip": "WebApiCrud\\Migrations\\20240610164342_initial migration.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-10T16:43:42.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Program.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Program.cs",
+              "RelativeToolTip": "WebApiCrud\\Program.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAowCUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-10T15:40:48.099Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "WebApiCrud\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\WebApiCrud\\WebApiCrud\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "WebApiCrud\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-10T15:49:17.434Z"
             }
           ]
         }
