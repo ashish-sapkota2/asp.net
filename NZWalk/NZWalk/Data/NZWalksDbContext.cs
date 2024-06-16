@@ -20,7 +20,7 @@ namespace NZWalk.Data
             //seed data for Difficulties
             //Easy,Medium, Hard
 
-            var dificulties = new List<Difficulty>()
+            var difficulties = new List<Difficulty>()
             {
                 new Difficulty()
                 {
@@ -39,7 +39,7 @@ namespace NZWalk.Data
                 },
             };
             //seed difficulties to the database
-            modelBuilder.Entity<Difficulty>().HasData(dificulties);
+            modelBuilder.Entity<Difficulty>().HasData(difficulties);
 
 
             //seed data for Regions
