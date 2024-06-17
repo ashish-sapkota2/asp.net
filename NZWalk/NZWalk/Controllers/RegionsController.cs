@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using NZWalk.CustomActionFilters;
 using NZWalk.Data;
 using NZWalk.Models;
 using NZWalk.Models.DTO;
@@ -80,7 +81,7 @@ namespace NZWalk.Controllers
         }
 
         [HttpPost]
-
+        [validateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto) {
 
             //    //map or convert the DTO to domain model
@@ -92,49 +93,55 @@ namespace NZWalk.Controllers
 
             //};
 
-            var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+           
+                var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
 
-            //use Domain model to create reion
-           await dbContext.Regions.AddAsync(regionDomainModel);
-            await dbContext.SaveChangesAsync();
-            //map domain model back to DTo
-            //var regionDto = new RegionDto
-            //{
-            //    Id = regionDomainModel.Id,
-            //    Code = regionDomainModel.Code,
-            //    Name = regionDomainModel.Name,
-            //    RegionImageUrl = regionDomainModel.RegionImageUrl,
-            //};
+                //use Domain model to create reion
+                await dbContext.Regions.AddAsync(regionDomainModel);
+                await dbContext.SaveChangesAsync();
+                //map domain model back to DTo
+                //var regionDto = new RegionDto
+                //{
+                //    Id = regionDomainModel.Id,
+                //    Code = regionDomainModel.Code,
+                //    Name = regionDomainModel.Name,
+                //    RegionImageUrl = regionDomainModel.RegionImageUrl,
+                //};
 
-            var regionDto = mapper.Map<RegionDto>(regionDomainModel);
-            return CreatedAtAction(nameof(Get), new { id = regionDto.Id }, regionDto);
+                var regionDto = mapper.Map<RegionDto>(regionDomainModel);
+                return CreatedAtAction(nameof(Get), new { id = regionDto.Id }, regionDto);
         }
 
         [HttpPut("{id:guid}")]
+        [validateModel]
         public async Task<IActionResult> Update(Guid id,[FromBody] UpdateRegionRequestDto updateRegionRequestDto) {
-            var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
-            //var regionDomainModel= await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
-           if (regionDomainModel == null) { 
-               return NotFound();
-            }
+            
+                var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
+                //var regionDomainModel= await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+                if (regionDomainModel == null)
+                {
+                    return NotFound();
+                }
 
-            regionDomainModel.Code = updateRegionRequestDto.Code;
-            regionDomainModel.Name = updateRegionRequestDto.Name;
-            regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
-            await dbContext.SaveChangesAsync();
+                regionDomainModel.Code = updateRegionRequestDto.Code;
+                regionDomainModel.Name = updateRegionRequestDto.Name;
+                regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
+                await dbContext.SaveChangesAsync();
 
-            //convet domainmodel to DTo
+                //convet domainmodel to DTo
 
-            //var regionDto = new RegionDto
-            //{
-            //    Id= regionDomainModel.Id,
-            //    Code = regionDomainModel.Code,
-            //    Name = regionDomainModel.Name,
-            //    RegionImageUrl= regionDomainModel.RegionImageUrl,
-            //};
+                //var regionDto = new RegionDto
+                //{
+                //    Id= regionDomainModel.Id,
+                //    Code = regionDomainModel.Code,
+                //    Name = regionDomainModel.Name,
+                //    RegionImageUrl= regionDomainModel.RegionImageUrl,
+                //};
 
-            var regionDto = mapper.Map<Region>(regionDomainModel);
-            return Ok(regionDto);
+                var regionDto = mapper.Map<Region>(regionDomainModel);
+                return Ok(regionDto);
+ 
+          
         }
 
         [HttpDelete("{id:guid}")]
