@@ -1,6 +1,6 @@
-﻿namespace PractiseSet.Models
+﻿namespace PractiseSet.Models.DTO
 {
-    public class Employee
+    public class EmployeeDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
