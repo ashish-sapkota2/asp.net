@@ -69,7 +69,7 @@ namespace PaymentAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         // POST: api/PaymentDetail
@@ -80,7 +80,7 @@ namespace PaymentAPI.Controllers
             _context.PaymentDetails.Add(paymentDetails);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPaymentDetails", new { id = paymentDetails.PaymentDetailId }, paymentDetails);
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         // DELETE: api/PaymentDetail/5
@@ -96,7 +96,7 @@ namespace PaymentAPI.Controllers
             _context.PaymentDetails.Remove(paymentDetails);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(await _context.PaymentDetails.ToListAsync());
         }
 
         private bool PaymentDetailsExists(int id)
