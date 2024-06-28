@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using PractiseSet.Data;
 using PractiseSet.Models;
 using PractiseSet.Models.DTO;
-using PractiseSet.Repository;
+using PractiseSet.Repositories;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PractiseSet.Controllers
 {
@@ -13,80 +14,101 @@ namespace PractiseSet.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly PractiseDbContext practiseDbContext;
-        private readonly IEmployee employeerepositoy;
+        private readonly EmployeeDbContext context;
         private readonly IMapper mapper;
+        private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeController(PractiseDbContext practiseDbContext , IEmployee employeerepositoy, IMapper mapper) 
-        {
-            this.practiseDbContext = practiseDbContext;
-            this.employeerepositoy = employeerepositoy;
+        public EmployeeController(EmployeeDbContext context, IMapper mapper, IEmployeeRepository employeeRepository) {
+            this.context = context;
             this.mapper = mapper;
+            this.employeeRepository = employeeRepository;
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployee()
+        public async Task<ActionResult<Employee>> GetAll()
         {
-            var employeedomain = await employeerepositoy.GetAll();
+            //var employee = await context.Employees.ToListAsync();
+            //if (employee == null)
+            //{
+            //    return NotFound("No any data found");
+            //}
+            //return Ok(employee);
 
-            var employeeDto = mapper.Map<Employee>(employeedomain);
-
+            // get data from database 
+            var employeedomain = await employeeRepository.GetAllAsync();
+            
+            //map domain model to DTO
+            var employeeDto = mapper.Map<List<Employee>>(employeedomain);
             return Ok(employeeDto);
         }
+
         [HttpGet("{id}")]
-
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<Employee>> GetById(int id)
         {
-            var employee = await practiseDbContext.Employees.FindAsync(id);
-            return Ok(mapper.Map<EmployeeDto>(employee));
-
+            var employee = await context.Employees.FindAsync(id);
+            if (employee == null)
+            {
+                return NotFound($"No details on Employee Id: {id}");
+            }
+            return Ok(employee);   
         }
-
         [HttpPost]
-        public async Task<IActionResult> Insert(Employee employee)
+        public async Task<ActionResult<Employee>> PutData(PostEmployeeDto employee)
         {
-             practiseDbContext.Employees.Add(employee);
-            await practiseDbContext.SaveChangesAsync();
-            return Ok(employee);
+            //   var record = context.Employees.Add(employee);
+            //    await context.SaveChangesAsync();
+            //    if (record == null) {
+            //        return BadRequest();
+            //    }
+            //    return Ok(await context.Employees.ToListAsync());
+            //}
+
+            //convert to domain model
+            var employeedomain = mapper.Map<Employee>(employee);
+            await context.Employees.AddAsync(employeedomain);
+            await context.SaveChangesAsync();
+
+            return Ok(mapper.Map<EmployeeDto>(employeedomain));
         }
 
         [HttpPut("{id}")]
+        public async Task<ActionResult<Employee>> Update(int id, UpdateEmployeeDto updateEmployeeDto) {
+            //fetch data 
 
-        public async Task<IActionResult> Put(int id ,Employee employee)
-        {
-            var result = practiseDbContext.Employees.FirstOrDefault(x => x.Id == id);
-            if(result == null)
+            var record = await context.Employees.FindAsync(id);
+            
+            if (record == null)
             {
-                return BadRequest(result);
+                return NotFound($"No details found at Id: {id}");
             }
-            result.Id = id;
-            result.Name =employee.Name;
-            result.Email =employee.Email;
-            result.Addresss= employee.Addresss;
-            result.phone= employee.phone;
-            result.Department = employee.Department;
-            practiseDbContext.SaveChanges();
-            return Ok(result);
-        }
-        
-
-        [HttpDelete("{id}")]
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var result = await practiseDbContext.Employees.FindAsync(id);
-            if(result == null)
+            record.PhoneNumber = updateEmployeeDto.PhoneNumber;
+            record.Email  = updateEmployeeDto.Email;
+            record.Department= updateEmployeeDto.Department;
+            record.Name = updateEmployeeDto.Name;
+            var update = await context.SaveChangesAsync();
+            if (update == 1)
             {
-                return NotFound($"Employee with {id} not found");
+                Console.WriteLine("success");
             }
             else
             {
-                
-                 practiseDbContext.Remove(result);
-                await practiseDbContext.SaveChangesAsync();
+                Console.WriteLine("someerror");
             }
-            return Ok(result);
+            var employeedto = mapper.Map<Employee>(record);
+            return Ok(employeedto);
+        }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Employee>> Delete(int id)
+        {
+            var record = await context.Employees.FindAsync(id);
+            if (record == null)
+            {
+                return BadRequest("No record found");
+            }
+            context.Employees.Remove(record);
+            await context.SaveChangesAsync();
+            return Ok(record);
         }
     }
+
 }

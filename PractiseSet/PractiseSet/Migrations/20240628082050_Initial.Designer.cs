@@ -10,8 +10,8 @@ using PractiseSet.Data;
 
 namespace PractiseSet.Migrations
 {
-    [DbContext(typeof(PractiseDbContext))]
-    [Migration("20240620163917_Initial")]
+    [DbContext(typeof(Data.EmployeeDbContext))]
+    [Migration("20240628082050_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,15 +26,11 @@ namespace PractiseSet.Migrations
 
             modelBuilder.Entity("PractiseSet.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Addresss")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -44,18 +40,15 @@ namespace PractiseSet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("phone")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
 
                     b.ToTable("Employees");
                 });

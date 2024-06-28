@@ -1,13 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace PractiseSet.Models
+namespace PractiseSet.Models.DTO
 {
-    public class Employee
+    public class UpdateEmployeeDto
     {
-        [Key]
-        public int EmployeeId { get; set; }
-
         [Required]
         public string Name { get; set; }
 
@@ -20,5 +16,4 @@ namespace PractiseSet.Models
         [Required]
         public string Department { get; set; }
     }
-
 }

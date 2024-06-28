@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PractiseSet.Data;
-using PractiseSet.Repository;
+using PractiseSet.Mappings;
+using PractiseSet.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IEmployee,SQLEmployeeRepository>();
+builder.Services.AddDbContext<EmployeeDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Practise"));
+});
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
 
 
-builder.Services.AddDbContext<PractiseDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("Practise"))
-);
 
 var app = builder.Build();
 
