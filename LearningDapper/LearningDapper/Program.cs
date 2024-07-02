@@ -1,6 +1,6 @@
-using DatingApp.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using LearningDapper.dapperContext;
+using LearningDapper.Interface;
+using LearningDapper.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors();
-
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"));
-});
+builder.Services.AddTransient<DapperDbContext>();
+builder.Services.AddTransient<IDapperService, dapperRepo>();
 
 var app = builder.Build();
 
@@ -28,9 +24,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
-app.UseCors(x=> x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 app.UseAuthorization();
 
 app.MapControllers();

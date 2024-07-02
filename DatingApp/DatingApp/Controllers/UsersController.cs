@@ -18,10 +18,10 @@ namespace DatingApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<AppUser>> GetUsers()
         {
             var users = await  context.Users.ToListAsync();
-            return users;
+            return Ok(users);
 
         }
         [HttpGet("{id}")]
