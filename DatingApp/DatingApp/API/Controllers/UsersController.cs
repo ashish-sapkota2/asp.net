@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp.Controllers
+namespace DatingApp.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext context;
 
@@ -20,15 +18,16 @@ namespace DatingApp.Controllers
         [HttpGet]
         public async Task<ActionResult<AppUser>> GetUsers()
         {
-            var users = await  context.Users.ToListAsync();
+            var users = await context.Users.ToListAsync();
             return Ok(users);
 
         }
         [HttpGet("{id}")]
-        public async  Task<ActionResult<AppUser>>GetUser(int id)
+        public async Task<ActionResult<AppUser>> GetUser(int id)
         {
-            var user = await  context.Users.FindAsync(id);
-            if (user == null) {
+            var user = await context.Users.FindAsync(id);
+            if (user == null)
+            {
                 return NotFound("NO user on the given id");
             }
             return user;
