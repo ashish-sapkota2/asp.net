@@ -59,6 +59,24 @@ export class TodosComponent implements OnInit{
       console.error("error");
     }
   }
+  toggleTodo(todo: Todo){
+
+    // Check if `todos` is defined
+    if (this.todos) {
+      // Find the index of the todo to delete
+      const index = this.todos.indexOf(todo);
+  
+      // Ensure the index is valid
+      if (index !== -1) {
+        this.todos[index].active =!this.todos[index].active;
+        localStorage.setItem("todos",JSON.stringify(this.todos));
+      } else {
+        console.error("Todo not found in the list.");
+      }
+    } else {
+      console.error("Todos list is undefined.");
+    }
+  }
   
 
 }
