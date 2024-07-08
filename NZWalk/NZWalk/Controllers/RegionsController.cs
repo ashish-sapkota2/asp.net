@@ -35,7 +35,7 @@ namespace NZWalk.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Reader")]
+        //[Authorize(Roles ="Rea/*der")]
         public async Task<IActionResult> GetAll()
         {
             //Get data from database == domain models
