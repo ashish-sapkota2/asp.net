@@ -34,7 +34,7 @@ namespace Test.API.Controllers
                 using var hmac = new HMACSHA512();
                 var user = new AppUser
                 {
-                    UserName = registerDto.Username,
+                    UserName = registerDto.Username.ToLower(),
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                     PasswordSalt =hmac.Key
                 };
