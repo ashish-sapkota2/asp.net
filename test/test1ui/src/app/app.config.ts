@@ -8,11 +8,14 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 
 import { routes } from './app.routes';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(withFetch()),
      FormsModule, CommonModule, BsDropdownConfig,
       BrowserAnimationsModule,
-      provideAnimations()
+      provideAnimations(),
+      provideToastr()
+
     ]
 };

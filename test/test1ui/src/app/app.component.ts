@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
   standalone: true,
   imports: [RouterOutlet, FormsModule, CommonModule,
      HttpClientModule, NgFor, NavComponent,
-    HomeComponent
+    HomeComponent, RouterLinkActive
     ],
   templateUrl: './app.component.html',
   styleUrls:[ './app.component.css',

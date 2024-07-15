@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Test.API.Data;
 using Test.API.Interface;
+using Test.API.Middleware;
 using Test.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 });
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddeWare>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class RegisterComponent {
   @Output() cancelRegister= new EventEmitter();
   model: any={};
 
-  constructor(private accountService: AccountService){
+  constructor(private accountService: AccountService, private toastr : ToastrService){
 
   }
 
@@ -24,6 +25,8 @@ export class RegisterComponent {
       console.log(response);
       this.cancel();
 
+    },error=>{
+      this.toastr.error(error)
     })
   }
   cancel(){
