@@ -22,7 +22,7 @@ import { HomeComponent } from './home/home.component';
 })
 export class AppComponent {
   title = 'Dating App';
-  users: any;
+  users: any | null;
 
   constructor(private http: HttpClient , private accountService: AccountService){
     this.setCurrentUser();
@@ -34,7 +34,7 @@ setCurrentUser(){
     const user: User= JSON.parse(result);
     this.accountService.setCurrentUser(user);
   }else{
-    console.log("Error Occurs")
+    this.accountService.setCurrentUser(this.users);
   }
 }
 }

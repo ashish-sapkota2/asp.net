@@ -22,7 +22,6 @@ namespace Test.API.Controllers
             return "secret text";
         }
 
-        [Authorize]
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
@@ -32,17 +31,19 @@ namespace Test.API.Controllers
 
         }
 
-        [Authorize]
         [HttpGet("server-error")]
-        public ActionResult<string> GetServerError()
+        public ActionResult<AppUser> GetServerError()
         {
                 var thing = context.Users.Find(-1);
-                var thingsToReturn = thing.ToString();
-                return thingsToReturn;
+                if(thing==null) return StatusCode(500, "Internal Server error");
+            else
+            {
+
+                return Ok(thing);
+            }
 
         }
 
-        [Authorize]
         [HttpGet("bad-request")]
         public ActionResult<string> GetBadRequest()
         {

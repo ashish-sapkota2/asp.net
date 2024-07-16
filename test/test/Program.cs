@@ -37,12 +37,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 });
 var app = builder.Build();
+//using var scope = app.Services.CreateScope();
+//var services= scope.ServiceProvider;
+//try
+//{
+//    var context = services.GetRequiredService<DataContext>();
+//    await context.Database.MigrateAsync();
+//    await Seed.SeedUsers(context);
+//}catch(Exception ex)
+//{
+//    var logger = services.GetRequiredService<ILogger<Program>>();
+//    logger.LogError(ex, "An error occured during migration");
+//}
+//await app.RunAsync();
 
-app.UseMiddleware<ExceptionMiddeWare>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseMiddleware<ExceptionMiddleware>();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -52,5 +65,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+ 
 app.Run();

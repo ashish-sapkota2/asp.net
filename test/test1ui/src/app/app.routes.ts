@@ -1,4 +1,5 @@
 import { mapToCanActivate, Routes } from '@angular/router';
+import { TestErrorsComponent } from './Errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
@@ -13,12 +14,13 @@ export const routes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
         children: [
-
-            {path : 'members', component: MemberListComponent, canActivate:[authGuard]},
+            
+            {path : 'members', component: MemberListComponent},
             {path : 'members/:id', component: MemberDetailComponent},
             {path : 'lists', component: ListsComponent},
             {path : 'messages', component: MessagesComponent},
-            {path : '**', component: HomeComponent, pathMatch:'full'},
         ]
     },
+    {path:'errors', component: TestErrorsComponent},
+    {path : '**', component: HomeComponent, pathMatch:'full'},
 ];
