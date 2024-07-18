@@ -25,7 +25,7 @@ namespace Test.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet]   
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await userRepository.GetMembersAsync();

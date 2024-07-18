@@ -1,19 +1,20 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Datingapp.API.Interface;
+using Datingapp.API.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Test.API.Interface;
-using Test.API.Models;
 
-namespace Test.API.Services
+namespace Datingapp.API.Services
 {
-    public class TokenService :ITokenService
+    public class TokenService : ITokenService
     {
-        private readonly SymmetricSecurityKey Key;
+        private readonly SymmetricSecurityKey key;
 
         public TokenService(IConfiguration config)
         {
-            this.Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            this.key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
         public string CreateToken(AppUser user)
         {
@@ -21,19 +22,18 @@ namespace Test.API.Services
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
             };
-            var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(20),
+                Expires = DateTime.Now.AddDays(30),
                 SigningCredentials = creds
             };
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token= tokenHandler.CreateToken(tokenDescription);
+            var token = tokenHandler.CreateToken(tokenDescription);
 
             var tokenString = tokenHandler.WriteToken(token);
-            Console.WriteLine($"Generated token for user {user.UserName}: {tokenString}");
+            Console.WriteLine($"Token: {tokenString}");
             return tokenHandler.WriteToken(token);
         }
     }

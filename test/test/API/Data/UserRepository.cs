@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Test.API.DTOs;
 using Test.API.Interface;
@@ -11,11 +12,13 @@ namespace Test.API.Data
     {
         private readonly DataContext context;
         private readonly IMapper mapper;
+        private readonly DapperContext dapperContext;
 
-        public UserRepository(DataContext context, IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper, DapperContext dapperContext)
         {
             this.context = context;
             this.mapper = mapper;
+            this.dapperContext = dapperContext;
         }
 
         public async Task<MemberDto> GetMemberAsync(string username)
@@ -26,9 +29,15 @@ namespace Test.API.Data
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
-            return await context.Users.
-                 ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-                 .ToListAsync();
+            var sql = "select * from users";
+            using (var connection = dapperContext.CreateConnection())
+            {
+                var task = await connection.QueryAsync<MemberDto>(sql);
+                return task;
+            }
+            //return await context.Users.
+            //     ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+            //     .ToListAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUserAsync()
