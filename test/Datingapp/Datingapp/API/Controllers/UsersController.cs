@@ -21,7 +21,7 @@ namespace Datingapp.API.Controllers
            
             this.userRepository = userRepository;
         }
-        [Authorize]
+
         [HttpGet]
         public async Task<List<AppUser>> GetAllUsers()
         {
@@ -33,10 +33,5 @@ namespace Datingapp.API.Controllers
             return await userRepository.GetByUsername(username);
         }
 
-        [HttpPut("Update")]
-        public async Task<string>Update(string username,RegisterDto registerDto)
-        {
-            return await userRepository.UpdateData(registerDto);
-        }
     }
 }

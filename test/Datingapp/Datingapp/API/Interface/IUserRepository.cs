@@ -7,6 +7,5 @@ namespace Datingapp.API.Interface
     {
         Task<List<AppUser>> GetAll();
         Task<List<AppUser>> GetByUsername(string username);
-        Task<string> UpdateData(RegisterDto user);
     }
 }
