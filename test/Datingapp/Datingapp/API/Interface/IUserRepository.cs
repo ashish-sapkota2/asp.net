@@ -5,7 +5,7 @@ namespace Datingapp.API.Interface
 {
     public interface IUserRepository
     {
-        Task<List<AppUser>> GetAll();
+        Task<IEnumerable<MemberDto>> GetAll();
         Task<List<AppUser>> GetByUsername(string username);
     }
 }

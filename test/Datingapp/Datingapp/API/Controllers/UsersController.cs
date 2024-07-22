@@ -23,7 +23,7 @@ namespace Datingapp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<AppUser>> GetAllUsers()
+        public async Task<IEnumerable<MemberDto>> GetAllUsers()
         {
             return await userRepository.GetAll();
         }
