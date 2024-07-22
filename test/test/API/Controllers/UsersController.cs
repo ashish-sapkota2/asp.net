@@ -28,6 +28,7 @@ namespace Test.API.Controllers
                 return BadRequest("No Users found ");
             }
         }
+        
         [HttpGet("{id}")]
         public async Task<ActionResult>GetById(int id)
         {
