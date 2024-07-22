@@ -19,6 +19,5 @@ export const appConfig: ApplicationConfig = {
       provideToastr(),
     provideHttpClient(withInterceptors([errorInterceptor])),
 
-
     ]
 };
