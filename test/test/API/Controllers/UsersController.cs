@@ -1,45 +1,50 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using Test.API.Data;
+using Test.API.DTOs;
+using Test.API.Interface;
 using Test.API.Models;
 
 namespace Test.API.Controllers
 {
+    //[Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext context;
+ 
+        private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
 
-        public UsersController(DataContext context)
+        public UsersController(IUserRepository userRepository , IMapper mapper)
         {
-            this.context = context;
+     
+            this.userRepository = userRepository;
+            this.mapper = mapper;
         }
-        [HttpGet]
-        public async Task<ActionResult> GetAllUsers()
+
+        [HttpGet]   
+        public async Task<IActionResult> GetAllUsers()
         {
-            var result = await context.Users.ToListAsync();
-            if (result.Count > 0)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest("No Users found ");
-            }
+            var users = await userRepository.GetMembersAsync();
+
+            return Ok(users);
         }
-        
-        [HttpGet("{id}")]
-        public async Task<ActionResult>GetById(int id)
+        [Authorize]
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>>GetById(string username)
         {
-            var result = await context.Users.FindAsync(id);
+            var result = await userRepository.GetMemberAsync(username);
+
             if(result!= null)
             {
-                return Ok(result);
+                return result;
             }
             else
             {
-                return NotFound($"No user found at Id : {id}");
+                return NotFound($"No user found at Id : {username}");
             }
         }
 

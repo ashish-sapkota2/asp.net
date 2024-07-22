@@ -25,12 +25,15 @@ namespace Test.API.Services
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddDays(20),
                 SigningCredentials = creds
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token= tokenHandler.CreateToken(tokenDescription);
+
+            var tokenString = tokenHandler.WriteToken(token);
+            Console.WriteLine($"Generated token for user {user.UserName}: {tokenString}");
             return tokenHandler.WriteToken(token);
         }
     }

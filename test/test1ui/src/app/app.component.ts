@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
   standalone: true,
   imports: [RouterOutlet, FormsModule, CommonModule,
      HttpClientModule, NgFor, NavComponent,
-    HomeComponent
+    HomeComponent, RouterLinkActive
     ],
   templateUrl: './app.component.html',
   styleUrls:[ './app.component.css',
@@ -22,7 +22,7 @@ import { HomeComponent } from './home/home.component';
 })
 export class AppComponent {
   title = 'Dating App';
-  users: any;
+  users: any | null;
 
   constructor(private http: HttpClient , private accountService: AccountService){
     this.setCurrentUser();
@@ -34,7 +34,7 @@ setCurrentUser(){
     const user: User= JSON.parse(result);
     this.accountService.setCurrentUser(user);
   }else{
-    console.log("Error Occurs")
+    this.accountService.setCurrentUser(this.users);
   }
 }
 }
