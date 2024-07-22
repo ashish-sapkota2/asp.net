@@ -29,15 +29,15 @@ namespace Test.API.Data
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
-            var sql = "select * from users";
-            using (var connection = dapperContext.CreateConnection())
-            {
-                var task = await connection.QueryAsync<MemberDto>(sql);
-                return task;
-            }
-            //return await context.Users.
-            //     ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-            //     .ToListAsync();
+            //var sql = "select * from users";
+            //using (var connection = dapperContext.CreateConnection())
+            //{
+            //    var task = await connection.QueryAsync<MemberDto>(sql);
+            //    return task;
+            //}
+            return await context.Users.
+                 ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+                 .ToListAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUserAsync()
