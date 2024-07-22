@@ -4,7 +4,6 @@ import {map} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { User } from '../models/user';
 
-
 //services are injectable
 @Injectable({
   providedIn: 'root'
