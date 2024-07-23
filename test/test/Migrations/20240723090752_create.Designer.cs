@@ -12,8 +12,8 @@ using Test.API.Data;
 namespace Test.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240716103442_ExtendedUserEntity")]
-    partial class ExtendedUserEntity
+    [Migration("20240723090752_create")]
+    partial class create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,8 +51,9 @@ namespace Test.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Interest")
-                        .HasColumnType("int");
+                    b.Property<string>("Interests")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Introduction")
                         .IsRequired()
@@ -101,7 +102,6 @@ namespace Test.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PublicId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
