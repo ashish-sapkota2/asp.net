@@ -9,7 +9,7 @@ import { Member } from '../_models/member';
 })
 export class MembersService {
 
-  baseUrl= 'http://localhost:5082/api/';
+  baseUrl= 'https://localhost:7276/api/';
 
   constructor(private http: HttpClient) { }
 
