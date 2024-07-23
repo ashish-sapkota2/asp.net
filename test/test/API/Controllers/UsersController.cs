@@ -32,7 +32,6 @@ namespace Test.API.Controllers
 
             return Ok(users);
         }
-        [Authorize]
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>>GetById(string username)
         {

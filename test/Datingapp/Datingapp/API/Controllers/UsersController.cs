@@ -22,6 +22,7 @@ namespace Datingapp.API.Controllers
             this.userRepository = userRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<MemberDto>> GetAllUsers()
         {
