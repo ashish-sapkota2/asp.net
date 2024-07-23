@@ -8,7 +8,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl= 'https://localhost:7276/api/';
+  baseUrl= 'http://localhost:5082/api/';
   private currentUserSource = new ReplaySubject<User | null>(1);  // ReplaySubject that holds the current user or null. It's initialized with a buffer size of 1, meaning it will replay the last emitted value to new subscribers.
   currentUser$ = this.currentUserSource.asObservable();
 

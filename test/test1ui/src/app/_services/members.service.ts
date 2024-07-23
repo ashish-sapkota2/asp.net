@@ -9,30 +9,17 @@ import { Member } from '../_models/member';
 })
 export class MembersService {
 
-  baseUrl= 'https://localhost:7276/api/';
+  baseUrl= 'http://localhost:5082/api/';
 
   constructor(private http: HttpClient) { }
 
-  private getHttpOptions(){
 
-    const user = localStorage.getItem('user');
-    let token =''
-    if(user){
-      token =JSON.parse(user);
-    }
-    return{
-      headers: new HttpHeaders({
-        
-        Authorization: 'Bearer ' +token
-      })
-    }
-  }
   getMembers(){
-    return this.http.get<Member[]>(this.baseUrl + 'users',this.getHttpOptions())
+    return this.http.get<Member[]>(this.baseUrl + 'users')
   }
 
   getMember(username:string){
-    return this.http.get<Member>(this.baseUrl + 'users/'+ username, this.getHttpOptions())
+    return this.http.get<Member>(this.baseUrl + 'users/'+ username)
   }
 
 }
