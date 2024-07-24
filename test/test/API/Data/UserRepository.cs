@@ -35,9 +35,8 @@ namespace Test.API.Data
             //    var task = await connection.QueryAsync<MemberDto>(sql);
             //    return task;
             //}
-            return await context.Users.
-                 ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-                 .ToListAsync();
+          var result =  await context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider).ToListAsync();
+            return result;
         }
 
         public async Task<IEnumerable<AppUser>> GetUserAsync()
