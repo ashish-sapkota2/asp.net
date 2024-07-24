@@ -21,7 +21,7 @@ export class AppComponent {
   users: any;
   
   constructor(private http: HttpClient, private accountService: AccountService ){
-    this.getUsers();
+    // this.getUsers();
     this.serCurrentUser();
   }
 
@@ -33,11 +33,11 @@ export class AppComponent {
       this.accountService.setCurrentUser(user);
     }
   }
-  getUsers(){
+  // getUsers(){
 
-    this.http.get('https://localhost:7164/api/users').subscribe(response=>{
-      this.users= response;
-    })
-  }
+  //   this.http.get('https://localhost:7164/api/users').subscribe(response=>{
+  //     this.users= response;
+  //   })
+  // }
 
 }

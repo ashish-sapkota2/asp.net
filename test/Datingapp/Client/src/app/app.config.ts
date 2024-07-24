@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
@@ -7,9 +7,10 @@ import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-brow
 
 import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
+import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(withFetch()), 
     CommonModule, FormsModule, BrowserAnimationsModule, provideAnimations(),
-  provideToastr()]
+  provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor]))]
 };
