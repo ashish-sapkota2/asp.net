@@ -1,1 +1,6 @@
-{}
+{
+  "dependencies": {
+    "@kolkov/ngx-gallery": "^2.0.1",
+    "ngx-bootstrap": "^18.0.2"
+  }
+}

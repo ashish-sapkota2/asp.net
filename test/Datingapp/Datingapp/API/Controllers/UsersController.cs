@@ -12,6 +12,7 @@ namespace Datingapp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+        //[Authorize]
     public class UsersController
     {
         private readonly IUserRepository userRepository;
@@ -22,14 +23,14 @@ namespace Datingapp.API.Controllers
             this.userRepository = userRepository;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<MemberDto>> GetAllUsers()
         {
             return await userRepository.GetAll();
         }
-        [HttpGet("Username")]
-        public async Task<List<AppUser>> GetUser(string username)
+        [HttpGet]
+        [Route("{username}")]
+        public async Task<IEnumerable<MemberDto>> GetUser(string username)
         {
             return await userRepository.GetByUsername(username);
         }

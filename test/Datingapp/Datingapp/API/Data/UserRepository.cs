@@ -38,13 +38,13 @@ namespace Datingapp.API.Data
             return await dataContext.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<List<AppUser>>GetByUsername(string username)
+        public async Task<IEnumerable<MemberDto>>GetByUsername(string username)
         {
-            var sql = "select * from users where username =@username";
+            var sql = "select users.*,photos.url from users left join photos on users.id=photos.appuserid where username =@username";
             using (var connection = dapperDbContext.CreateConnection())
             {
-                var task = await connection.QueryAsync<AppUser>(sql, new {username= username});
-                return task.ToList();
+                var task = await connection.QueryAsync<MemberDto>(sql, new {username= username});
+                return task;
             }
         }
 

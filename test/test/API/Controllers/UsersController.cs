@@ -34,7 +34,7 @@ namespace Test.API.Controllers
             return Ok(users);
         }
         //[Authorize]
-        [HttpGet("{username}"),Authorize]
+        [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>>GetById(string username)
         {
             var result = await userRepository.GetMemberAsync(username);

@@ -6,6 +6,6 @@ namespace Datingapp.API.Interface
     public interface IUserRepository
     {
         Task<IEnumerable<MemberDto>> GetAll();
-        Task<List<AppUser>> GetByUsername(string username);
+        Task<IEnumerable<MemberDto>> GetByUsername(string username);
     }
 }

@@ -51,7 +51,7 @@ getImages():NgxGalleryImage[]{
 loadMember(){
   let username = this.route.snapshot.paramMap.get('username');
   if(username){
-
+    console.log(username);
     this.memberService.getMember(username).subscribe(member=>{
       this.member= member;
       this.galleryImages =this.getImages();
