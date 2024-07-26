@@ -49,7 +49,6 @@ namespace Datingapp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Interest")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Introduction")

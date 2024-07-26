@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datingapp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240722085049_extended user entity")]
-    partial class extendeduserentity
+    [Migration("20240725153907_changes")]
+    partial class changes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,8 +51,8 @@ namespace Datingapp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Interest")
-                        .HasColumnType("int");
+                    b.Property<string>("Interest")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Introduction")
                         .IsRequired()

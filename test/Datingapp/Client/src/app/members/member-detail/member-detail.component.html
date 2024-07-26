@@ -1,4 +1,4 @@
-<div class="row" *ngFor="let member of member" >
+<div class="row" *ngIf="member" >
     <div class="col-4">
         <div class="card">
             <img src="{{member.url || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
@@ -39,11 +39,12 @@
             </tab>
             <tab heading="Interests">
                 <h4>Interests</h4>
-                <p>{{member.interest}}</p>
+                <p>{{member.interests}}</p>
             </tab>
             <tab heading="Photos">
                 <p>photos</p>
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+                <!-- <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery> -->
             </tab>
             <tab heading="Messages">
                 <p>Messages will go here</p>
