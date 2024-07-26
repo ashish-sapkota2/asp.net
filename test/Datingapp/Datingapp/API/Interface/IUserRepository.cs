@@ -5,7 +5,11 @@ namespace Datingapp.API.Interface
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<MemberDto>> GetAll();
-        Task<IEnumerable<MemberDto>> GetByUsername(string username);
+        void Update(AppUser user);
+        Task<bool> SaveAllAsync();
+        Task<IEnumerable<AppUser>> GetAll();
+        Task<AppUser> GetByUsername(string username);
+        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<MemberDto> GetMemberAsync(string username);
     }
 }

@@ -10,57 +10,69 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptio
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [CommonModule,TabsModule, NgxGalleryModule],
+  imports: [CommonModule,TabsModule,NgxGalleryModule],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
 export class MemberDetailComponent {
-member: Member;
-galleryOptions: NgxGalleryOptions[]=[];
-galleryImages: NgxGalleryImage[]=[];
+  member: Member ;
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
+  
+  constructor(private memberService: MembersService, private route: ActivatedRoute){
+    
+    this.galleryOptions =[
+      {
+        height: '500px',
+        width: '500px',
+        imagePercent : 100,
+        thumbnailsColumns: 4,
+        imageAnimation: NgxGalleryAnimation.Slide,
+        preview:true
+      }
+    ]
+    // this.galleryImages = [
+    //   {
+    //     small: 'https://randomuser.me/api/portraits/women/54.jpg',
+    //     medium: 'https://randomuser.me/api/portraits/women/54.jpg',
+    //     big: 'https://randomuser.me/api/portraits/women/54.jpg'
+    //   },
+    // ]
+    this.loadMember();
+    
+  }
 
-constructor(private memberService: MembersService, private route: ActivatedRoute){
-  this.loadMember();
+  loadMember(){
+     let username = this.route.snapshot.paramMap.get('username');
+     console.log(username);
+    if(username){
+      this.memberService.getMember(username).subscribe(members=>{
+        this.member= members;
+        this.galleryImages=this.getImages();
+        console.log("loaded member", this.member)
 
-  this.galleryOptions =[
-    {
-      height: '500px',
-      width: '500px',
-      imagePercent : 100,
-      thumbnailsColumns: 4,
-      imageAnimation: NgxGalleryAnimation.Slide,
-      preview:true
-    }
-  ]
-
-}
-getImages():NgxGalleryImage[]{
-  const imageUrls =[];
-  const photos = this.member[0].photos;
-  if(photos){
-    for(const photo of photos){
-      imageUrls.push({
-        small:photo?.url,
-        medium:photo?.url,
-        big: photo?.url,
       })
+    }else{
+  
+      console.log("loaded member", this.member)
     }
   }
-  return imageUrls
-}
-loadMember(){
-  let username = this.route.snapshot.paramMap.get('username');
-  if(username){
-    console.log(username);
-    this.memberService.getMember(username).subscribe(member=>{
-      this.member= member[0];
-      console.log("loaded member", this.member)
-      this.galleryImages =this.getImages();
-    })
+  getImages():NgxGalleryImage[]{
+    const imageUrls =[];
+    const photos = this.member?.photos;
+    if(photos){
+      for(const photo of photos){
+        imageUrls.push({
+          small:photo?.url,
+          medium:photo?.url,
+          big: photo?.url,
+        })
+      }
+      return imageUrls
+    }
+  
   }
 }
-}
-
   // this.route.paramMap.subscribe(params => {
   //   const username = params.get('username');
   //   if (username) {

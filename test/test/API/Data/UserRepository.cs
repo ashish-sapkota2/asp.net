@@ -30,7 +30,7 @@ namespace Test.API.Data
             //{
             //    var task = await connection.QueryAsync<AppUser>(sql, new { username = username });
             //    return task.ToList();
-        //}
+            //}
         }
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
@@ -41,7 +41,7 @@ namespace Test.API.Data
             //    var task = await connection.QueryAsync<MemberDto>(sql);
             //    return task;
             //}
-          var result =  await context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider).ToListAsync();
+            var result = await context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider).ToListAsync();
             return result;
         }
 
@@ -57,7 +57,7 @@ namespace Test.API.Data
 
         public async Task<AppUser> GetUserByUsername(string username)
         {
-            return await context.Users.Include(u=>u.Photos).SingleOrDefaultAsync(x => x.UserName == username);
+            return await context.Users.Include(u => u.Photos).SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -67,7 +67,7 @@ namespace Test.API.Data
 
         public void Update(AppUser user)
         {
-            context.Entry(user).State= EntityState.Modified;
+            context.Entry(user).State = EntityState.Modified;
         }
     }
 }

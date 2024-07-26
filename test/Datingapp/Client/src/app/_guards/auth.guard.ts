@@ -22,6 +22,7 @@ export const authGuard: CanActivateFn = (
          console.log("user authenticated");
          return true;
         }else{
+          toastrService.error('You need to login');
          router.navigate(['/']);
          return false;
        }
