@@ -20,6 +20,7 @@ export class MemberListComponent {
  loadMembers(){
   this.memberService.getMembers().subscribe(member=>{
     this.members= member;
+    console.log(this.members)
   })
  
 }

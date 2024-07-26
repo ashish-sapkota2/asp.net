@@ -15,7 +15,7 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptio
   styleUrl: './member-detail.component.css'
 })
 export class MemberDetailComponent {
-member: Member| undefined;
+member: Member;
 galleryOptions: NgxGalleryOptions[]=[];
 galleryImages: NgxGalleryImage[]=[];
 

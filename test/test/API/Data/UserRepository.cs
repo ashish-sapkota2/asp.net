@@ -23,14 +23,14 @@ namespace Test.API.Data
 
         public async Task<MemberDto> GetMemberAsync(string username)
         {
-            //return await context.Users.
-            //    Where(x => x.UserName == username).ProjectTo<MemberDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
-            var sql = "select * from users where username =@username";
-            using (var connection = dapperDbContext.CreateConnection())
-            {
-                var task = await connection.QueryAsync<AppUser>(sql, new { username = username });
-                return task.ToList();
-            }
+            return await context.Users.
+                Where(x => x.UserName == username).ProjectTo<MemberDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            //var sql = "select * from users where username =@username";
+            //using (var connection = dapperContext.CreateConnection())
+            //{
+            //    var task = await connection.QueryAsync<AppUser>(sql, new { username = username });
+            //    return task.ToList();
+            //}
         }
 
         public async Task<IEnumerable<MemberDto>> GetMembersAsync()
