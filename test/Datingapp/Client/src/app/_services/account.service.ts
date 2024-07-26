@@ -9,7 +9,7 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
-  baseUrl ="http://localhost:5205/api/";
+  baseUrl ="https://localhost:7164/api/";
  //Replaysubject store the value and anytime subscriber subscribe the observable it will emit last value stored
   private currentUserSource = new ReplaySubject<User| null>(1)
 

@@ -8,6 +8,7 @@ import { Member } from '../../_models/member';
 import { User } from '../../_models/user';
 import { AccountService } from '../../_services/account.service';
 import { MembersService } from '../../_services/members.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-member-edit',
@@ -28,18 +29,23 @@ export class MemberEditComponent {
   }
 
   constructor(private accountService: AccountService, private memberService: MembersService,
-    private toastr: ToastrService){
+    private toastr: ToastrService, private route: Router){
     this.accountService.currentUser$.pipe(take(1)).subscribe(user=>this.user=user);
     this.loadMember();
   }
   loadMember(){
       this.memberService.getMember(this.user.username).subscribe(member=>{
-        this.member=member[0];
+        this.member=member;
         console.log(this.member);
       })
   }
   updateMember(){
-    console.log("update is clicked")
+    console.log("update is clicked");
+    this.memberService.updateMember(this.member).subscribe(member=>{
+      // this.member=member;
+      console.log(this.member);
+      this.route.navigate['/members'];
+    })
     this.toastr.success('Profile updated Successfully');
     this.editForm?.reset(this.member);
   }

@@ -68,8 +68,8 @@ export class MemberDetailComponent {
           big: photo?.url,
         })
       }
-      return imageUrls
     }
+    return imageUrls
   
   }
 }
