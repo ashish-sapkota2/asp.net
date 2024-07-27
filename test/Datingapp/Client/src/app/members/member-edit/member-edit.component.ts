@@ -41,12 +41,10 @@ export class MemberEditComponent {
   }
   updateMember(){
     console.log("update is clicked");
-    this.memberService.updateMember(this.member).subscribe(member=>{
-      // this.member=member;
-      console.log(this.member);
+    this.memberService.updateMember(this.member).subscribe(()=>{
+      this.toastr.success('Profile updated Successfully');
+      this.editForm.reset(this.member);
       this.route.navigate['/members'];
     })
-    this.toastr.success('Profile updated Successfully');
-    this.editForm?.reset(this.member);
   }
 }
