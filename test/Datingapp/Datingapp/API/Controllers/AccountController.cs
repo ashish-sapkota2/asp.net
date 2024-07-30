@@ -5,6 +5,7 @@ using Datingapp.API.Interface;
 using Datingapp.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,11 +16,13 @@ namespace Datingapp.API.Controllers
     {
         private readonly DapperDbContext dapperDbContext;
         private readonly ITokenService tokenService;
+        private readonly DataContext context;
 
-        public AccountController(DapperDbContext dapperDbContext, ITokenService tokenService)
+        public AccountController(DapperDbContext dapperDbContext, ITokenService tokenService, DataContext context)
         {
             this.dapperDbContext = dapperDbContext;
             this.tokenService = tokenService;
+            this.context = context;
         }
         [HttpPost("Register")]
         public async Task<ActionResult<RegisterDto>>Register(RegisterDto registerDto)
@@ -48,10 +51,11 @@ namespace Datingapp.API.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var sql = "select * from users where username =@username";
-            using(var connection = dapperDbContext.CreateConnection())
-            {
-                var user = await connection.QueryFirstOrDefaultAsync<AppUser>(sql, new { username = loginDto.Username });
+            var user = await context.Users.Include(p => p.Photos).SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            //var sql = "select *,photos.url from users left join photos on users.id=photos.appuserid where username =@username";
+            //using(var connection = dapperDbContext.CreateConnection())
+            //{
+            //    var user = await connection.QueryFirstOrDefaultAsync<AppUser>(sql, new { username = loginDto.Username });
                 if (user==null)
                 {
                     return BadRequest("Username doesnot exists"); 
@@ -68,10 +72,11 @@ namespace Datingapp.API.Controllers
                 return new UserDto
                 {
                     Username = user.UserName,
-                    Token = tokenService.CreateToken(user)
+                    Token = tokenService.CreateToken(user),
+                    PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain).Url
 
                 };
-            }
+            //}
         }
 
         private async Task<bool>UserExists(string username)
