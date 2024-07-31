@@ -8,9 +8,10 @@ import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-brow
 import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
+import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(withFetch()), 
+  providers: [provideRouter(routes), provideHttpClient(withFetch()),
     CommonModule, FormsModule, BrowserAnimationsModule, provideAnimations(),
   provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor]))]
 };

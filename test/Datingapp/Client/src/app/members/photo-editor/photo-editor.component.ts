@@ -66,7 +66,12 @@ deletePhoto(photoId:number){
     this.uploader.onSuccessItem=(item,response,status,headers)=>{
       if(response){
         const photo = JSON.parse(response);
-        this.member.photos.push(photo)
+        this.member.photos.push(photo);
+        if(photo.isMain){
+          this.user.photoUrl= photo.url;
+          this.member.url= photo.url;
+          this.accountService.setCurrentUser(this.user);
+        }
       }
     }
   }

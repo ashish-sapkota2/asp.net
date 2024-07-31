@@ -1,7 +1,40 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()"  autocomplete="off">
+<form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()"  autocomplete="off">
     <h2 class="text-center text-dark">Sign Up</h2>
     <hr>
     <div class="form-group">
+        <label class="control-label" style="margin-right: 10px; margin-bottom: 3px;">I am a:</label>
+        <label class="radio-inline">
+            <input type="radio" value="male" formControlName="gender">Male
+        </label>
+        <label class="radio-inline">
+            <input type="radio" value="female" formControlName="gender" style="margin-left: 3px;" >Female
+        </label>
+    </div>
+    <app-text-inputs [formControl]="registerForm.controls['username']" 
+    [label]='"Username"' ></app-text-inputs>
+    <app-text-inputs [formControl]="registerForm.controls['knownAs']" 
+    [label]='"known As"' ></app-text-inputs>
+    <app-date-input [formControl]="registerForm.controls['dateOfBirth']" 
+    [label]='"Date of Birth"'[maxDate]="maxDate" ></app-date-input>
+    <app-text-inputs [formControl]="registerForm.controls['city']" 
+    [label]='"City"' ></app-text-inputs>
+    <app-text-inputs [formControl]="registerForm.controls['country']" 
+    [label]='"Country"' ></app-text-inputs>
+    <app-text-inputs [formControl]="registerForm.controls['password']" 
+    [label]='"password"' [type]='"password"'  ></app-text-inputs>
+    <app-text-inputs [formControl]="registerForm.controls['confirmPassword']" 
+    [label]='"Confirm Password"' [type]='"password"' ></app-text-inputs>
+
+    <div class="row" *ngIf="validationErrors.length>0">
+        <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">{{error}}</li>
+        </ul>
+    </div>
+    <div class="form-group text-center">
+        <button [disabled]="!registerForm.valid" class="btn btn-dark" style="margin-right: 5px;" type="submit" >Register</button>
+        <button class="btn btn-secondary mr-2" type="submit" (click) = "cancel()" >Cancel</button>
+    </div>
+    <!-- <div class="form-group">
         <input
         [class.is-invalid]='registerForm.get("username").errors 
         && registerForm.get("username").touched'
@@ -38,13 +71,7 @@
         class="invalid-feedback">Please enter a confirm password</div>
         <div  *ngIf="registerForm.get('confirmPassword').hasError('isMatching')"
         class="invalid-feedback">Confirm password must match password</div>
-    </div>
+    </div> -->
 
-    <div class="form-group text-center">
-        <button class="btn btn-dark" style="margin-right: 5px;" type="submit">Register</button>
-        <button class="btn btn-secondary mr-2" type="submit" (click) = "cancel()">Cancel</button>
-    </div>
+
 </form>
-
-<p>form value: {{registerForm.value | json}}</p>
-<p>form status: {{registerForm.status| json}}</p>

@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using AutoMapper;
+using Dapper;
 using Datingapp.API.Data;
 using Datingapp.API.DTO;
 using Datingapp.API.Interface;
@@ -17,35 +18,53 @@ namespace Datingapp.API.Controllers
         private readonly DapperDbContext dapperDbContext;
         private readonly ITokenService tokenService;
         private readonly DataContext context;
+        private readonly IMapper mapper;
 
-        public AccountController(DapperDbContext dapperDbContext, ITokenService tokenService, DataContext context)
+        public AccountController(DapperDbContext dapperDbContext, ITokenService tokenService, DataContext context, IMapper mapper)
         {
             this.dapperDbContext = dapperDbContext;
             this.tokenService = tokenService;
             this.context = context;
+            this.mapper = mapper;
         }
         [HttpPost("Register")]
-        public async Task<ActionResult<RegisterDto>>Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>>Register(RegisterDto registerDto)
         {
-            if(await UserExists(registerDto.Username))
-            {
-                return BadRequest($"Username: {registerDto.Username} already exists");
-            }
-          
-            var response = string.Empty;
+            if (await UserExists(registerDto.Username)) return BadRequest($"{registerDto.Username} already exists");
+
+            var user = mapper.Map<AppUser>(registerDto);
             using var hmac = new HMACSHA512();
-            var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            var passwordSalt = hmac.Key;
-            var sql = "insert into users(UserName, PasswordHash,PasswordSalt) values(@username, @passwordHash, @passwordSalt)";
-            var parameters = new DynamicParameters();
-            parameters.Add("username", registerDto.Username);
-            parameters.Add("passwordHash",passwordHash);  
-            parameters.Add("passwordsalt",passwordSalt);   
-            using(var connection = dapperDbContext.CreateConnection())
+            user.UserName = registerDto.Username.ToLower();
+            user.PasswordHash= hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+            return new UserDto
             {
-                var task = await connection.ExecuteAsync(sql, parameters);
-            }
-            return registerDto;
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user),
+                KnownAs= user.KnownAs
+            };
+            //if(await UserExists(registerDto.Username))
+            //{
+            //    return BadRequest($"Username: {registerDto.Username} already exists");
+            //}
+          
+            //var response = string.Empty;
+            //using var hmac = new HMACSHA512();
+            //var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            //var passwordSalt = hmac.Key;
+            //var sql = "insert into users(UserName, PasswordHash,PasswordSalt) values(@username, @passwordHash, @passwordSalt)";
+            //var parameters = new DynamicParameters();
+            //parameters.Add("username", registerDto.Username);
+            //parameters.Add("passwordHash",passwordHash);  
+            //parameters.Add("passwordsalt",passwordSalt);   
+            //using(var connection = dapperDbContext.CreateConnection())
+            //{
+            //    var task = await connection.ExecuteAsync(sql, parameters);
+            //}
+            //return registerDto;
         }
 
         [HttpPost("Login")]
@@ -73,7 +92,9 @@ namespace Datingapp.API.Controllers
                 {
                     Username = user.UserName,
                     Token = tokenService.CreateToken(user),
-                    PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain).Url
+                    PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain).Url,
+                    KnownAs= user.KnownAs
+                    
 
                 };
             //}
