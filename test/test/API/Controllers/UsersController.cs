@@ -55,7 +55,7 @@ namespace Test.API.Controllers
             var user = await userRepository.GetUserByUsername(username);
             mapper.Map(memberUpdateDto, user);
             userRepository.Update(user);
-
+             
             if (await userRepository.SaveAllAsync()) return NoContent();
 
             return BadRequest("Failed to update user");

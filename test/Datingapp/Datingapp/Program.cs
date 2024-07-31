@@ -45,6 +45,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddCors();
 builder.Services.AddTransient<DapperDbContext>();
 
@@ -56,6 +57,7 @@ builder.Services.AddDbContext<DataContext>(
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddDbContext<Data>(options =>
 {
