@@ -1,0 +1,5 @@
+.flex-container {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    gap: 10px; /* Adjust the spacing between items */
+}
