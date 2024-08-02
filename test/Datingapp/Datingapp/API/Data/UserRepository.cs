@@ -16,10 +16,10 @@ namespace Datingapp.API.Data
     public class UserRepository : IUserRepository
     {
         private readonly DapperDbContext dapperDbContext;
-        private readonly Data dataContext;
+        private readonly DataContext dataContext;
         private readonly IMapper mapper;
 
-        public UserRepository(DapperDbContext dapperDbContext, Data dataContext, IMapper mapper)
+        public UserRepository(DapperDbContext dapperDbContext, DataContext dataContext, IMapper mapper)
         {
             this.dapperDbContext = dapperDbContext;
             this.dataContext = dataContext;
