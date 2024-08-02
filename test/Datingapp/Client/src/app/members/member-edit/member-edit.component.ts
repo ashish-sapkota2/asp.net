@@ -10,11 +10,12 @@ import { AccountService } from '../../_services/account.service';
 import { MembersService } from '../../_services/members.service';
 import { Router } from '@angular/router';
 import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
   selector: 'app-member-edit',
   standalone: true,
-  imports: [CommonModule,TabsModule, FormsModule, PhotoEditorComponent],
+  imports: [CommonModule,TabsModule, FormsModule, PhotoEditorComponent, TimeagoModule],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
 })

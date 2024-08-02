@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
 import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-browser/animations'
@@ -8,10 +8,12 @@ import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-brow
 import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
-import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimeagoModule } from 'ngx-timeago';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(withFetch()),
     CommonModule, FormsModule, BrowserAnimationsModule, provideAnimations(),
-  provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor]))]
+  provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor])),
+  importProvidersFrom(TimeagoModule.forRoot())
+  ]
 };

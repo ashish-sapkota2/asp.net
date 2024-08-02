@@ -5,7 +5,7 @@ import { Pagination } from '../../_models/pagination';
 import { AccountService } from '../../_services/account.service';
 import { MembersService } from '../../_services/members.service';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MemberCardComponent } from '../member-card/member-card.component';
 import { FormsModule } from '@angular/forms';
 import { UserParams } from '../../_models/userParams';
@@ -15,7 +15,8 @@ import { User } from '../../_models/user';
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [CommonModule, MemberCardComponent, PaginationModule, FormsModule],
+  imports: [CommonModule, MemberCardComponent, PaginationModule,
+     FormsModule,ButtonsModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.css'
 })
@@ -27,14 +28,17 @@ export class MemberListComponent {
  genderList =[{value:'male', display: 'Males'}, {value:'female', display :'Females'}];
 
   constructor(private memberService: MembersService, private accountService: AccountService){
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user=>{
-      this.user=user;
-      this.userparams= new UserParams(user);
-    })
+    // this.accountService.currentUser$.pipe(take(1)).subscribe(user=>{
+    //   this.user=user;
+    //   this.userparams= new UserParams(user);
+    // })
+    this.userparams= this.memberService.getUserParams();
+
     this.loadMembers();
 
   }
   loadMembers(){
+    this.memberService.setUserParams(this.userparams);
     this.memberService.getMembers(this.userparams).subscribe(response=>{
       this.members=response.result;
       this.pagination= response.pagination
@@ -42,10 +46,12 @@ export class MemberListComponent {
   }
 
   resetFilters(){
-    this.userparams= new UserParams(this.user);
+    this.userparams= this.memberService.resetUserParams();
+    this.loadMembers();
   }
   pageChanged(event:any){ 
     this.userparams.pageNumber=event.page;
+    this.memberService.setUserParams(this.userparams);
     this.loadMembers();
 }
 

@@ -58,6 +58,7 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddDbContext<Data>(options =>
 {
