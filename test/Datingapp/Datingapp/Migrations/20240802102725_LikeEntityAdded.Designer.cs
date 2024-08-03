@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datingapp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240725153907_changes")]
-    partial class changes
+    [Migration("20240802102725_LikeEntityAdded")]
+    partial class LikeEntityAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,7 @@ namespace Datingapp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Interest")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Introduction")
@@ -59,7 +60,6 @@ namespace Datingapp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KnownAs")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastActive")
@@ -114,6 +114,21 @@ namespace Datingapp.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("Datingapp.API.Models.UserLike", b =>
+                {
+                    b.Property<int>("SourceUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikedUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SourceUserId", "LikedUserId");
+
+                    b.HasIndex("LikedUserId");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("Datingapp.API.Models.Photo", b =>
                 {
                     b.HasOne("Datingapp.API.Models.AppUser", "AppUser")
@@ -125,8 +140,31 @@ namespace Datingapp.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Datingapp.API.Models.UserLike", b =>
+                {
+                    b.HasOne("Datingapp.API.Models.AppUser", "LikedUser")
+                        .WithMany("LikedByUsers")
+                        .HasForeignKey("LikedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Datingapp.API.Models.AppUser", "SourceUser")
+                        .WithMany("LikedUsers")
+                        .HasForeignKey("SourceUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("LikedUser");
+
+                    b.Navigation("SourceUser");
+                });
+
             modelBuilder.Entity("Datingapp.API.Models.AppUser", b =>
                 {
+                    b.Navigation("LikedByUsers");
+
+                    b.Navigation("LikedUsers");
+
                     b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618

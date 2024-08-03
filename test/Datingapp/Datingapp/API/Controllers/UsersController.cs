@@ -3,6 +3,7 @@ using Dapper;
 using Datingapp.API.Data;
 using Datingapp.API.DTO;
 using Datingapp.API.Extensions;
+using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
 using Datingapp.API.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -30,9 +31,20 @@ namespace Datingapp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery]UserParams userParams)
         {
-            var users= await userRepository.GetMembersAsync();
+            var user = await userRepository.GetByUsername(User.GetUsername());
+
+            userParams.CurrentUsername = user.UserName;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+
+            var users= await userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount,
+                users.TotalPages);
             return Ok(users);
         }
         [HttpGet]
@@ -61,7 +73,7 @@ namespace Datingapp.API.Controllers
         public async Task<ActionResult<PhotoDto>>AddPhoto(IFormFile file)
         {
             var user = await userRepository.GetByUsername(User.GetUsername());
-
+            
             var result = await photoService.AddPhotoAsync(file);
 
             if (result.Error != null) return BadRequest(result.Error.Message);

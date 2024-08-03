@@ -11,5 +11,5 @@ import { Member } from '../../_models/member';
 })
 export class MemberCardComponent {
 
-  @Input() member : Member | undefined
+  @Input() member : Member
 }

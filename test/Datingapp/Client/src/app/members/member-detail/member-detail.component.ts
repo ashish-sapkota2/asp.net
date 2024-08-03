@@ -6,11 +6,12 @@ import { Member } from '../../_models/member';
 import { MembersService } from '../../_services/members.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { TimeagoFormatter, TimeagoModule } from "ngx-timeago";
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [CommonModule,TabsModule,NgxGalleryModule],
+  imports: [CommonModule,TabsModule,NgxGalleryModule, TimeagoModule,],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
