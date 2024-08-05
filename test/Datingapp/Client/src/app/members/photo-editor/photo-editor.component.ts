@@ -33,7 +33,7 @@ fileOverBase(e:any){
 
 setMainPhoto(photo: Photo){
   this.memberService.setMainPhoto(photo.id).subscribe(()=>{
-    this.user.photoUrl= photo.url;
+    this.user.Url= photo.url;
     this.accountService.setCurrentUser(this.user);
     this.member.url= photo.url;
     this.member.photos.forEach(p=>{
@@ -68,7 +68,7 @@ deletePhoto(photoId:number){
         const photo = JSON.parse(response);
         this.member.photos.push(photo);
         if(photo.isMain){
-          this.user.photoUrl= photo.url;
+          this.user.Url= photo.url;
           this.member.url= photo.url;
           this.accountService.setCurrentUser(this.user);
         }

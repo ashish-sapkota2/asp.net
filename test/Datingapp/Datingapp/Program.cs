@@ -1,6 +1,7 @@
 using Datingapp.API.Data;
 using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
+using Datingapp.API.Models;
 using Datingapp.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,7 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddScoped<ILikesRepository, LikesRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
