@@ -7,10 +7,15 @@ namespace Datingapp.API.Data
     public class LikesRepository : ILikesRepository
        
     {
-        public LikesRepository(DataContext context) { }
-        public Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
+        private readonly DataContext context;
+
+        public LikesRepository(DataContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
+        }
+        public async Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
+        {
+            return await context.Likes.FindAsync(sourceUserId, likedUserId);
         }
 
         public Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int userId)
@@ -19,7 +24,7 @@ namespace Datingapp.API.Data
         }
 
         public Task<AppUser> GetUserWithLikes(int userId)
-        {
+        { 
             throw new NotImplementedException();
         }
     }
