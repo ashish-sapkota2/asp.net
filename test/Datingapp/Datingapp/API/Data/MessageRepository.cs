@@ -1,4 +1,6 @@
-﻿using Datingapp.API.DTO;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Datingapp.API.DTO;
 using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
 using Datingapp.API.Models;
@@ -8,10 +10,12 @@ namespace Datingapp.API.Data
     public class MessageRepository : IMessageRepository
     {
         private readonly DataContext context;
+        private readonly IMapper mapper;
 
-        public MessageRepository(DataContext context)
+        public MessageRepository(DataContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
         public void AddMessage(Message message)
         {
@@ -23,7 +27,7 @@ namespace Datingapp.API.Data
            context.Messages.Remove(message);
         }
 
-        public Task<IEnumerable<MessageDto>> GetMessaeThread(int currentUserId, int recipientId)
+        public Task<IEnumerable<MessageDto>> GetMessageThread(int currentUserId, int recipientId)
         {
             throw new NotImplementedException();
         }
@@ -33,9 +37,23 @@ namespace Datingapp.API.Data
             return await context.Messages.FindAsync(id);
         }
 
-        public Task<PagedList<MessageDto>> GetMessagesForUser()
+        public async Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams)
         {
-            throw new NotImplementedException();
+            var query = context.Messages
+                .OrderByDescending(m => m.MessageSent)
+                .AsQueryable();
+
+            query = messageParams.Container switch
+            {
+                "Inbox" => query.Where(u => u.Recipient.UserName == messageParams.Username),
+                "Outbox" => query.Where(u => u.Sender.UserName == messageParams.Username),
+                _ => query.Where(u => u.Recipient.UserName == messageParams.Username
+                && u.DateRead==null)
+            };
+
+            var messages = query.ProjectTo<MessageDto>(mapper.ConfigurationProvider);
+
+            return await PagedList<MessageDto>.CreatedAsync(messages, messageParams.PageNumber, messageParams.PageSize);
         }
 
         public async Task<bool> SaveAllAsync()

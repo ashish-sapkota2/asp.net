@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Datingapp.API.DTO;
 using Datingapp.API.Extensions;
+using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
 using Datingapp.API.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -52,5 +53,19 @@ namespace Datingapp.API.Controllers
 
             return BadRequest("Failed to send message");
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageForUser([FromQuery]
+        MessageParams messageParams)
+        {
+            messageParams.Username = User.GetUsername();
+            var messages = await messageRepository.GetMessagesForUser(messageParams);
+
+            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize,
+                messages.TotalCount, messages.TotalPages);
+
+            return messages;
+        }
+
     }
 }
