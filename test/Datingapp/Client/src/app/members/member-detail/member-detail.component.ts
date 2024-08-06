@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ThisReceiver } from '@angular/compiler';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '../../_models/member';
 import { MembersService } from '../../_services/members.service';
@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
-export class MemberDetailComponent {
+export class MemberDetailComponent{
   @ViewChild('memberTabs', { static: true }) memberTabs: TabsetComponent;
   member: Member;
   galleryOptions: NgxGalleryOptions[];
@@ -34,10 +34,12 @@ export class MemberDetailComponent {
     this.route.data.subscribe(data => {
       this.member = data['member'];
     })
+    setTimeout(()=>{
 
-    this.route.queryParams.subscribe(params => {
-      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
-    })
+      this.route.queryParams.subscribe(params => {
+        params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
+      })
+    },50)
 
     this.galleryOptions = [
       {
@@ -52,15 +54,20 @@ export class MemberDetailComponent {
     this.galleryImages = this.getImages();
     // this.galleryImages = [
     //   {
-    //     small: 'https://randomuser.me/api/portraits/women/54.jpg',
-    //     medium: 'https://randomuser.me/api/portraits/women/54.jpg',
-    //     big: 'https://randomuser.me/api/portraits/women/54.jpg'
+      //     small: 'https://randomuser.me/api/portraits/women/54.jpg',
+      //     medium: 'https://randomuser.me/api/portraits/women/54.jpg',
+      //     big: 'https://randomuser.me/api/portraits/women/54.jpg'
     //   },
     // ]
 
   }
+  
+  
+  selectTab(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
+  }
 
-  // loadMember(){
+ // loadMember(){
   //    let username = this.route.snapshot.paramMap.get('username');
   //   if(username){
   //     this.memberService.getMember(username).subscribe(members=>{
@@ -92,16 +99,6 @@ export class MemberDetailComponent {
     })
   }
 
-  // selectTab(tabId: number) {
-  //   this.memberTabs.tabs[tabId].active = true;
-  // }
-  selectTab(tabId: number) {
-    if (this.memberTabs?.tabs) {
-      this.memberTabs.tabs[tabId].active = true;
-    } else {
-      console.error('memberTabs is not initialized or does not have tabs property');
-    }
-  }
   
 
 
