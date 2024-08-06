@@ -6,6 +6,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
+import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 export const routes: Routes = [
     {path:'', component: HomeComponent},
@@ -16,7 +17,7 @@ export const routes: Routes = [
         children:[
 
             {path:'members', component: MemberListComponent},
-            {path:'members/:username', component: MemberDetailComponent},
+            {path:'members/:username', component: MemberDetailComponent,resolve: {member:MemberDetailedResolver}},
             {path:'member/edit', component: MemberEditComponent},
             {path:'lists', component: ListsComponent},
             {path:'messages', component: MessagesComponent},

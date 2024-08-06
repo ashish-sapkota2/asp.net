@@ -1,37 +1,55 @@
 import { CommonModule } from '@angular/common';
 import { ThisReceiver } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '../../_models/member';
 import { MembersService } from '../../_services/members.service';
-import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TimeagoFormatter, TimeagoModule } from "ngx-timeago";
+import { MemberMessagesComponent } from '../member-messages/member-messages.component';
+import { Message } from '../../_models/message';
+import { MessageService } from '../../_services/message.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [CommonModule,TabsModule,NgxGalleryModule, TimeagoModule,],
+  imports: [CommonModule, TabsModule, NgxGalleryModule,
+     TimeagoModule, MemberMessagesComponent],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
 export class MemberDetailComponent {
-  member: Member ;
+  @ViewChild('memberTabs', { static: true }) memberTabs: TabsetComponent;
+  member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-  
-  constructor(private memberService: MembersService, private route: ActivatedRoute){
-    
-    this.galleryOptions =[
+  activeTab: TabDirective;
+  messages: Message[] = [];
+
+  constructor(private memberService: MembersService,
+    private route: ActivatedRoute, private messageService: MessageService) {
+      console.log('memberTabs:', this.memberTabs);
+    this.route.data.subscribe(data => {
+      this.member = data['member'];
+    })
+
+    this.route.queryParams.subscribe(params => {
+      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
+    })
+
+    this.galleryOptions = [
       {
         height: '500px',
         width: '500px',
-        imagePercent : 100,
+        imagePercent: 100,
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
-        preview:true
+        preview: true
       }
     ]
+    this.galleryImages = this.getImages();
     // this.galleryImages = [
     //   {
     //     small: 'https://randomuser.me/api/portraits/women/54.jpg',
@@ -39,39 +57,59 @@ export class MemberDetailComponent {
     //     big: 'https://randomuser.me/api/portraits/women/54.jpg'
     //   },
     // ]
-    this.loadMember();
-    
+
   }
 
-  loadMember(){
-     let username = this.route.snapshot.paramMap.get('username');
-     console.log(username);
-    if(username){
-      this.memberService.getMember(username).subscribe(members=>{
-        this.member= members;
-        this.galleryImages=this.getImages();
-        console.log("loaded member", this.member)
+  // loadMember(){
+  //    let username = this.route.snapshot.paramMap.get('username');
+  //   if(username){
+  //     this.memberService.getMember(username).subscribe(members=>{
+  //       this.member= members;
+  //     })
+  //   }else{
+  //     console.log("loaded member", this.member)
+  //   }
+  // }
 
-      })
-    }else{
-  
-      console.log("loaded member", this.member)
-    }
-  }
-  getImages():NgxGalleryImage[]{
-    const imageUrls =[];
+  getImages(): NgxGalleryImage[] {
+    const imageUrls = [];
     const photos = this.member?.photos;
-    if(photos){
-      for(const photo of photos){
+    if (photos) {
+      for (const photo of photos) {
         imageUrls.push({
-          small:photo?.url,
-          medium:photo?.url,
+          small: photo?.url,
+          medium: photo?.url,
           big: photo?.url,
         })
       }
     }
     return imageUrls
+
+  }
+  loadMessages() {
+    this.messageService.getMessageThread(this.member.username).subscribe(messages => {
+      this.messages = messages;
+    })
+  }
+
+  // selectTab(tabId: number) {
+  //   this.memberTabs.tabs[tabId].active = true;
+  // }
+  selectTab(tabId: number) {
+    if (this.memberTabs?.tabs) {
+      this.memberTabs.tabs[tabId].active = true;
+    } else {
+      console.error('memberTabs is not initialized or does not have tabs property');
+    }
+  }
   
+
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    if (this.activeTab.heading === 'Messages' && this.messages.length === 0) {
+      this.loadMessages()
+    }
   }
 }
   // this.route.paramMap.subscribe(params => {
