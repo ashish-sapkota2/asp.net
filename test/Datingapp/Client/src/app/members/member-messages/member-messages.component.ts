@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { formatMoment } from 'ngx-bootstrap/chronos/format';
 import { TimeagoModule } from 'ngx-timeago';
 import { Message } from '../../_models/message';
+import { MembersService } from '../../_services/members.service';
 import { MessageService } from '../../_services/message.service';
 
 @Component({
@@ -14,11 +15,20 @@ import { MessageService } from '../../_services/message.service';
   styleUrl: './member-messages.component.css'
 })
 export class MemberMessagesComponent {
-
+  @ViewChild('messageForm') messageForm: NgForm
   @Input() messages: Message[];
+  @Input() username: string
+  messageContent: string
 
-  constructor(){
+  constructor(private messageService: MessageService){
 
+  }
+
+  sendMessage(){
+    this.messageService.sendMessage(this.username, this.messageContent).subscribe(message=>{
+      this.messages.push(message);
+      this.messageForm.reset();
+    })
   }
 
 

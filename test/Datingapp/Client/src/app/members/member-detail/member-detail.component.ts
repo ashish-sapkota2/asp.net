@@ -30,7 +30,6 @@ export class MemberDetailComponent{
 
   constructor(private memberService: MembersService,
     private route: ActivatedRoute, private messageService: MessageService) {
-      console.log('memberTabs:', this.memberTabs);
     this.route.data.subscribe(data => {
       this.member = data['member'];
     })

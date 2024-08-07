@@ -30,6 +30,7 @@ namespace Datingapp.API.Controllers
             this.photoService = photoService;
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers([FromQuery]UserParams userParams)
         {
@@ -47,6 +48,7 @@ namespace Datingapp.API.Controllers
                 users.TotalPages);
             return Ok(users);
         }
+        [Authorize(Roles ="Member")]
         [HttpGet]
         [Route("{username}", Name ="GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)

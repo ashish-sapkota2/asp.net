@@ -19,7 +19,6 @@ export const authGuard: CanActivateFn = (
       take(1),
       map(user=>{
        if(user){
-         console.log("user authenticated");
          return true;
         }else{
           toastrService.error('You need to login');
