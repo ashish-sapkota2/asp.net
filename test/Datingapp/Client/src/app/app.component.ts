@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 

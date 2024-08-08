@@ -117,9 +117,9 @@ namespace Datingapp.API.Controllers
                 { 
                     Username = user.UserName,
                     Token = await tokenService.CreateToken(user),
-                    PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain).Url,
-                    KnownAs= user.KnownAs,
-                    Gender= user.Gender,
+                    PhotoUrl = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
+                    KnownAs= user?.KnownAs,
+                    Gender= user?.Gender,
                   
 
                 };
@@ -130,13 +130,14 @@ namespace Datingapp.API.Controllers
         {
             return await userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
             //bool response;
-            //var sql = "select username from users where username=@username";
-            //using(var connection = dapperDbContext.CreateConnection())
+            //var sql = "select username from aspnetusers where username=@username";
+            //using (var connection = dapperDbContext.CreateConnection())
             //{
             //    var user = await connection.QueryFirstOrDefaultAsync<string>(sql, new { username });
-            //    return user != null;
+            //    return (user!=null) ? true : false;
+            //    //return user != null;
             //}
-  
+
         }
             
     }

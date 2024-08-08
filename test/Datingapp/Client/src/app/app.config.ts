@@ -9,11 +9,13 @@ import { routes } from './app.routes';
 import { provideToastr } from 'ngx-toastr';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(withFetch()),
     CommonModule, FormsModule, BrowserAnimationsModule, provideAnimations(),
   provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor])),
-  importProvidersFrom(TimeagoModule.forRoot())
-  ]
+  importProvidersFrom(TimeagoModule.forRoot()), HasRoleDirective
+  ],
+  
 };
