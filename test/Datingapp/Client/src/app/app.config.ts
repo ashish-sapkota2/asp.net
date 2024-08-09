@@ -10,12 +10,13 @@ import { provideToastr } from 'ngx-toastr';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
 import { HasRoleDirective } from './_directives/has-role.directive';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(withFetch()),
-    CommonModule, FormsModule, BrowserAnimationsModule, provideAnimations(),
+    FormsModule, BrowserAnimationsModule, provideAnimations(),
   provideToastr(), provideHttpClient(withInterceptors([jwtInterceptor])),
-  importProvidersFrom(TimeagoModule.forRoot()), HasRoleDirective
+  importProvidersFrom(TimeagoModule.forRoot()), HasRoleDirective,importProvidersFrom(ModalModule.forRoot())
   ],
   
 };
