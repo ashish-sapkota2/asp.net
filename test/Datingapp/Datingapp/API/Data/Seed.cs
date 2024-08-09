@@ -91,6 +91,7 @@ namespace Datingapp.API.Data
             // Create and assign roles to users
             foreach (var user in users)
             {
+                //user.Photos.First().IsApproved = true;
                 user.UserName = user.UserName.ToLower();
                 var result = await userManager.CreateAsync(user, "Ashish123"); // Use a strong password
                 if (result.Succeeded)

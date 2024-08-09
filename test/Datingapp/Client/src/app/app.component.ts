@@ -8,6 +8,7 @@ import { NavComponent } from './nav/nav.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
+import { PresenceService } from './_services/presence.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent {
   title = 'Client';
   users: any;
   
-  constructor(private http: HttpClient, private accountService: AccountService ){
+  constructor(private http: HttpClient,
+     private accountService: AccountService,private presence: PresenceService ){
     // this.getUsers();
     this.serCurrentUser();
   }
@@ -31,7 +33,11 @@ export class AppComponent {
     if(response){
 
       const user: User = JSON.parse(response);
-      this.accountService.setCurrentUser(user);
+      if(user){
+
+        this.accountService.setCurrentUser(user);
+        this.presence.createHubConnection(user);
+      }
     }
   }
   // getUsers(){
