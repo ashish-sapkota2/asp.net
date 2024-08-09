@@ -7,7 +7,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class PresenceService {
-  hubUrl ="https://localhost:7164/hub/";
+  hubUrl ="https://localhost:7164/hubs/";
 
   private hubConnection: HubConnection;
 
@@ -23,7 +23,7 @@ export class PresenceService {
 
     this.hubConnection.start()
     .then(()=>console.log('connected to signalR'))
-    .catch(error=> console.log(error));
+    .catch(error=> console.log('Error connecting to signalR hub:',error));
     
     this.hubConnection.on('UserIsOnline', username=>{
       this.toastr.info(username + ' is connected');
