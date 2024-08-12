@@ -42,7 +42,21 @@ namespace Datingapp.API.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(CreateMessageDto createMessageDto)
+        //public class MessageHub : Hub
+//{
+//    public async Task SendMessage(string recipientUsername, string content)
+//        {
+//            // Logic to store the message
+
+//            // Fetch updated message thread
+//            var messages = await messageRepository.GetMessageThread(Context.User.GetUsername(), recipientUsername);
+
+//            // Notify the recipient
+//            await Clients.User(recipientUsername).SendAsync("ReceiveMessageThread", messages);
+//        }
+//    }
+
+    public async Task SendMessage(CreateMessageDto createMessageDto)
         {
             var username = Context.User.GetUsername();
 
