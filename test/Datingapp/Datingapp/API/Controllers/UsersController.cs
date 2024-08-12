@@ -18,11 +18,11 @@ namespace Datingapp.API.Controllers
 
     public class UsersController :BaseApiController
     {
-        private readonly IUserRepository userRepository;
+        private readonly UserRepository userRepository;
         private readonly IMapper mapper;
         private readonly IPhotoService photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+        public UsersController(UserRepository userRepository, IMapper mapper, IPhotoService photoService)
         {
            
             this.userRepository = userRepository;
