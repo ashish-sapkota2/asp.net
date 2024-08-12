@@ -58,14 +58,15 @@ builder.Services.AddDbContext<DataContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
     });
 
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddScoped<ILikesRepository, LikesRepository>();
+builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -86,13 +87,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options =>
     {
 
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-            };
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -133,7 +134,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<PresenceHub>("/hubs/presence");
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -145,7 +147,8 @@ try
     await context.Database.MigrateAsync();
     //await Seed.SeedUsers(context);
     await Seed.SeedUsers(userManager, roleManager);
-}catch(Exception ex)
+}
+catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration");

@@ -1,4 +1,5 @@
-﻿using Datingapp.API.DTO;
+﻿using Datingapp.API.Data;
+using Datingapp.API.DTO;
 using Datingapp.API.Extensions;
 using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
@@ -11,10 +12,10 @@ namespace Datingapp.API.Controllers
     [Authorize]
     public class LikesController: BaseApiController
     {
-        private readonly IUserRepository userRepository;
+        private readonly UserRepository userRepository;
         private readonly ILikesRepository likesRepository;
 
-        public LikesController(IUserRepository userRepository, ILikesRepository likesRepository)
+        public LikesController(UserRepository userRepository, ILikesRepository likesRepository)
         {
             this.userRepository = userRepository;
             this.likesRepository = likesRepository; 

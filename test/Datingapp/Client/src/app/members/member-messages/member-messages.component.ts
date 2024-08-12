@@ -20,13 +20,16 @@ export class MemberMessagesComponent {
   @Input() username: string
   messageContent: string
 
-  constructor(private messageService: MessageService){
+  constructor(public messageService: MessageService){
 
   }
 
   sendMessage(){
-    this.messageService.sendMessage(this.username, this.messageContent).subscribe(message=>{
-      this.messages.push(message);
+    this.messageService.sendMessage(this.username, this.messageContent).then(
+      // message=>
+      ()=>
+      {
+      // this.messages.push(message);
       this.messageForm.reset();
     })
   }
