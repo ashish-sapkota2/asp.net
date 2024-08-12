@@ -22,20 +22,20 @@ namespace Datingapp.API.SignalR
         }
         public override async Task OnConnectedAsync()
         {
-          try{  var httpContext = Context.GetHttpContext();
+            var httpContext = Context.GetHttpContext();
             var otherUser = httpContext.Request.Query["user"].ToString();
             var groupName = GetGroupName(Context.User.GetUsername(), otherUser);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+                Console.WriteLine($"Added connection {Context.ConnectionId} to group {groupName}");
 
-            var messages = await messageRepository.
+
+                var messages = await messageRepository.
                 GetMessageThread(Context.User.GetUsername(), otherUser);
+                Console.WriteLine($"Retrieved {messages?.Count()} messages for group {groupName}");
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessageThread", messages);
-            }catch(Exception ex)
-            {
-                Console.WriteLine($"Error in OnConnectedAsync: {ex.Message}");
-                throw;
-            }
+
+                Console.WriteLine($"Sent message thread to group {groupName}");
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -59,6 +59,7 @@ namespace Datingapp.API.SignalR
     public async Task SendMessage(CreateMessageDto createMessageDto)
         {
             var username = Context.User.GetUsername();
+            var groupName = GetGroupName(username, createMessageDto.RecipientUsername);
 
             if (username == createMessageDto.RecipientUsername.ToLower())
                 throw new HubException("Cannot send message to self");
@@ -81,6 +82,7 @@ namespace Datingapp.API.SignalR
 
             if (await messageRepository.SaveAllAsync()) {
                 var group = GetGroupName(sender.UserName, recipient.UserName);
+                Console.WriteLine($"Sending message to group {group}");
                 await Clients.Group(group).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
             }
         }
@@ -88,7 +90,7 @@ namespace Datingapp.API.SignalR
         private string GetGroupName(string caller, string other)
         {
             var stringCompare = string.CompareOrdinal(caller,other)<0;
-            return stringCompare ? $"{caller}- {other}" : $"{other}-{caller}";
+            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
         }
     }
 }
