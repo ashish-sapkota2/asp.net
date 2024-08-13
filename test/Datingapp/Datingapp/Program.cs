@@ -87,13 +87,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options =>
     {
 
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-            };
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -147,7 +147,8 @@ try
     await context.Database.MigrateAsync();
     //await Seed.SeedUsers(context);
     await Seed.SeedUsers(userManager, roleManager);
-}catch(Exception ex)
+}
+catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration");

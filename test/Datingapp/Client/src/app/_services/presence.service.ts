@@ -26,7 +26,7 @@ export class PresenceService {
 
     this.hubConnection.start()
     .then(()=>console.log('connected to signalR'))
-    .catch(error=> console.log(error));
+    .catch(error=> console.log('Error connecting to signalR hub:',error));
     
     this.hubConnection.on('UserIsOnline', username=>{
       this.toastr.info(username + ' is connected');

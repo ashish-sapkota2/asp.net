@@ -17,7 +17,9 @@ export class AccountService {
   //as this is observable by convention it uses dollar sign
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient,private presence: PresenceService) { }
+  constructor(private http: HttpClient,
+    private presence: PresenceService
+  ) { }
 
   login(model:any){
     return this.http.post<User>(this.baseUrl+ 'account/login', model).pipe(
@@ -40,7 +42,7 @@ export class AccountService {
         //   localStorage.setItem('user',JSON.stringify(user));
         //   this.currentUserSource.next(user);
         this.setCurrentUser(user);
-        this.presence.createHubConnection(user);
+        // this.presence.createHubConnection(user);
         }
         return user;
       })
@@ -57,7 +59,7 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
-    this.presence.stopHubConnection();
+    // this.presence.stopHubConnection();
   }
 
   getDecodedToken(token){
