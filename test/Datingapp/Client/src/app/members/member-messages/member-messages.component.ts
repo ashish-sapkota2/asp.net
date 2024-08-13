@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { formatMoment } from 'ngx-bootstrap/chronos/format';
 import { TimeagoModule } from 'ngx-timeago';
@@ -8,6 +8,7 @@ import { MembersService } from '../../_services/members.service';
 import { MessageService } from '../../_services/message.service';
 
 @Component({
+  changeDetection:ChangeDetectionStrategy.OnPush,
   selector: 'app-member-messages',
   standalone: true,
   imports: [CommonModule, FormsModule, TimeagoModule],
