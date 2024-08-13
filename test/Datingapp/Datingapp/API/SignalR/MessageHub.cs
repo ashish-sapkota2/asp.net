@@ -88,7 +88,7 @@ namespace Datingapp.API.SignalR
         private string GetGroupName(string caller, string other)
         {
             var stringCompare = string.CompareOrdinal(caller,other)<0;
-            return stringCompare ? $"{caller}- {other}" : $"{other}-{caller}";
+            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
         }
     }
 }
