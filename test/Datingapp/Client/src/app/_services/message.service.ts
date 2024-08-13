@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { BehaviorSubject, take } from 'rxjs';
+import { Group } from '../_models/group';
 import { Message } from '../_models/message';
 import { User } from '../_models/user';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
@@ -42,6 +43,18 @@ export class MessageService {
       console.log('Received message thread:', messages);
       this.messageThreadSource.next(messages);
     });
+    this.hubConnection.on('UpdatedGroup', (group:Group)=>{
+      if(group.connections.some(x=>x.username===otherUsername)){
+        this.messageThread$.pipe(take(1)).subscribe(messages=>{
+          messages.forEach(message=>{
+            if(!message.dateRead){
+              message.dateRead= new Date(Date.now())
+            }
+          })
+          this.messageThreadSource.next([...messages]);
+        })
+      }
+    })
 
     this.hubConnection.onreconnecting(error => {
       console.warn('Hub connection lost, attempting to reconnect...', error);

@@ -84,9 +84,39 @@ namespace Datingapp.API.Data
             return await PagedList<MessageDto>.CreatedAsync(messages, messageParams.PageNumber, messageParams.PageSize);
         }
 
-        public async Task<bool> SaveAllAsync()
+        //public async Task<bool> SaveAllAsync()
+        //{
+        //    return await context.SaveChangesAsync() > 0;
+        //}
+
+        public void AddGroup(Group group)
         {
-            return await context.SaveChangesAsync() > 0;
+            context.Groups.Add(group);
+        }
+
+        public void RemoveConnection(Connection connection)
+        {
+            context.Connections.Remove(connection);
+        }
+
+        public async Task<Connection> GetConnection(string connectionId)
+        {
+            return await context.Connections.FindAsync(connectionId);
+        }
+
+        public async Task<Group> GetMessageGroup(string groupName)
+        {
+            return await context.Groups
+                .Include(x => x.Connections)
+                .FirstOrDefaultAsync(x => x.Name == groupName);
+        }
+
+        public async Task<Group> GetGroupForConnection(string connectionId)
+        {
+            return await context.Groups
+                .Include(c => c.Connections)
+                .Where(c => c.Connections.Any(x => x.ConnectionId == connectionId))
+                .FirstOrDefaultAsync();
         }
     }
 }

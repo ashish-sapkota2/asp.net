@@ -80,10 +80,10 @@ namespace Datingapp.API.Data
             //}
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await dataContext.SaveChangesAsync() > 0;
-        }
+        //public async Task<bool> SaveAllAsync()
+        //{
+        //    return await dataContext.SaveChangesAsync() > 0;
+        //}
 
         public void Update(AppUser user)
         {

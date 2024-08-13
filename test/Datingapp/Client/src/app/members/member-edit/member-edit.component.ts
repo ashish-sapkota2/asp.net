@@ -11,6 +11,7 @@ import { MembersService } from '../../_services/members.service';
 import { Router } from '@angular/router';
 import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
 import { TimeagoModule } from 'ngx-timeago';
+import { ConfirmService } from '../../_services/confirm.service';
 
 @Component({
   selector: 'app-member-edit',
