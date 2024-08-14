@@ -38,7 +38,11 @@ namespace Datingapp.API.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>>Register(RegisterDto registerDto)
         {
-            if (await UserExists(registerDto.Username)) return BadRequest($"{registerDto.Username} already exists");
+            if (await UserExists(registerDto.Username)) return BadRequest(new
+            {
+                StatusCode = 400,
+                Message = $"Username {registerDto.Username} already exits"
+            });
 
             var user = mapper.Map<AppUser>(registerDto);
             //using var hmac = new HMACSHA512();
@@ -96,8 +100,14 @@ namespace Datingapp.API.Controllers
             //    var user = await connection.QueryFirstOrDefaultAsync<AppUser>(sql, new { username = loginDto.Username });
                 if (user==null)
                 {
-                    return BadRequest("Username doesnot exists"); 
-                }
+                var errorResponse = new
+                {
+                    StatusCode = 400,
+                    Message = "Username does not exist"
+                };
+
+                return BadRequest(errorResponse);
+            }
                 //using var hmac = new HMACSHA512(user.PasswordSalt);
                 //var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
                 //for(int i=0; i < computeHash.Length; i++)
@@ -111,9 +121,13 @@ namespace Datingapp.API.Controllers
                 var result = await signInManager
                 .CheckPasswordSignInAsync(user, loginDto.Password,false);
 
-            if (!result.Succeeded) return Unauthorized();
-            
-                return new UserDto
+            if (!result.Succeeded) return BadRequest(new
+            {
+                StatusCode = 400,
+                Message = "Password is Incorrect"
+            });
+
+            return new UserDto
                 { 
                     Username = user.UserName,
                     Token = await tokenService.CreateToken(user),

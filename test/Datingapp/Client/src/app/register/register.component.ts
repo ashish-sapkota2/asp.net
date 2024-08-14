@@ -38,7 +38,7 @@ initializeForm(){
     city: ['', Validators.required],
     country: ['', Validators.required],
     password: ['',[Validators.required,
-       Validators.minLength(4), Validators.maxLength(8)]],
+       Validators.minLength(6), Validators.maxLength(8)]],
     confirmPassword: ['', [Validators.required, this.matchValues('password')]]
   })
   // this.registerForm= new FormGroup({

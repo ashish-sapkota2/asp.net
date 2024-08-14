@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { PresenceService } from './presence.service';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient,
-    private presence: PresenceService
+    private presence: PresenceService,private toastr:ToastrService
   ) { }
 
   login(model:any){
@@ -31,7 +33,7 @@ export class AccountService {
           // localStorage.setItem('user',JSON.stringify(user));
           // this.currentUserSource.next(user);
         }
-      })
+      }),
     )
   }
 

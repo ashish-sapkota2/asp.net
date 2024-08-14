@@ -73,6 +73,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddIdentityCore<AppUser>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireDigit = false;
+    opt.Password.RequireUppercase=false;
 
 })
     .AddRoles<AppRole>()
