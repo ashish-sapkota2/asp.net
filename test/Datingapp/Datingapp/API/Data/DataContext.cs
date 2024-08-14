@@ -20,7 +20,7 @@ namespace Datingapp.API.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
-        //public DbSet<Photo> photos  { get; set; }
+        public DbSet<Photo> photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,8 @@ namespace Datingapp.API.Data
                .HasOne(u => u.Sender)
                .WithMany(m => m.MessagesSent)
                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
         }
 
     }

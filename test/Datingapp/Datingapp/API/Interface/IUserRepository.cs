@@ -11,7 +11,7 @@ namespace Datingapp.API.Interface
         Task<IEnumerable<AppUser>> GetAll();
         Task<AppUser> GetByUsername(string username);
         Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
-        Task<MemberDto> GetMemberAsync(string username);
-        //Task<AppUser> GetUserByPhotoId(int photoId);
+        Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser);
+        Task<AppUser> GetUserByPhotoId(int photoId);
     }
 }

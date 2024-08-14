@@ -25,10 +25,16 @@ namespace Datingapp.API.Data
             this.dataContext = dataContext;
             this.mapper = mapper;
         }
-        public async Task<MemberDto> GetMemberAsync(string username)
+        public async Task<MemberDto> GetMemberAsync(string username,bool isCurrentUser)
         {
-            return await dataContext.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(
-                    mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            var query= dataContext.Users
+                .Where(x => x.UserName == username)
+                .ProjectTo<MemberDto>(
+                    mapper.ConfigurationProvider)
+                .AsQueryable();
+
+            if (isCurrentUser) query = query.IgnoreQueryFilters();
+            return await query.FirstOrDefaultAsync();
  }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -90,13 +96,13 @@ namespace Datingapp.API.Data
             dataContext.Entry(user).State = EntityState.Modified;
         }
 
-        //public async Task<AppUser> GetUserByPhotoId(int photoId)
-        //{
-        //    return await dataContext.Users
-        //        .Include(u => u.Photos)
-        //        .IgnoreQueryFilters()
-        //        .Where(p => p.Photos.Any(p => p.Id == photoId))
-        //        .FirstOrDefaultAsync();
-        //}
+        public async Task<AppUser> GetUserByPhotoId(int photoId)
+        {
+            return await dataContext.Users
+                .Include(u => u.Photos)
+                .IgnoreQueryFilters()
+                .Where(p => p.Photos.Any(p => p.Id == photoId))
+                .FirstOrDefaultAsync();
+        }
     }
 }
