@@ -6,6 +6,7 @@ import { AdminService } from '../../_services/admin.service';
 import { BsModalRef, BsModalService, ModalModule, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../../Modals/roles-modal/roles-modal.component';
 import { ConfirmService } from '../../_services/confirm.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-management',
@@ -20,13 +21,23 @@ export class UserManagementComponent {
   bsModalRef: BsModalRef;
 
   constructor(private adminService: AdminService, private modalService: BsModalService,
-    private confirmService: ConfirmService){
+    private confirmService: ConfirmService,private toastr:ToastrService){
     this.getUsersWithRoles();
   }
 
   getUsersWithRoles(){
     this.adminService.getUsersWithRoles().subscribe(users=>{
       this.users=users;
+    })
+  }
+  deleteUser(username:string){
+    this.confirmService.confirm("Confirm delete user?","This cannot be undone").subscribe(result=>{
+      if(result){
+        this.adminService.deleteUser(username).subscribe(()=>{
+          this.users.splice(this.users.findIndex(u=>u.username===username),1);
+          this.toastr.success("User deleted ");
+        })
+      }
     })
   }
 
@@ -78,8 +89,5 @@ export class UserManagementComponent {
     return roles;
   }
 
-  deleteUser(username:string){
-    this.confirmService.confirm("Confirm delete user?","This cannot be undone")
-  }
 
 }

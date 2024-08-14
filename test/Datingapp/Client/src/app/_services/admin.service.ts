@@ -30,4 +30,7 @@ baseUrl='https://localhost:7164/api/';
   rejectPhoto(photoId:number){
     return this.http.post(this.baseUrl+ 'admin/reject-photo/' + photoId ,{});
   }
+  deleteUser(username:string){
+    return this.http.post(this.baseUrl+ 'admin/deleteuser/' +username, {});
+  }
 }

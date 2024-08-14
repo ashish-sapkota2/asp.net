@@ -113,6 +113,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+    opt.AddPolicy("deleteuser", policy => policy.RequireRole("Admin"));
     opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
 });
 

@@ -143,67 +143,6 @@ namespace Datingapp.API.Controllers
             //}
         }
 
-        public async Task<ActionResult>DeleteUser(string username)
-        {
-            var sql = @"
-            BEGIN TRANSACTION;
-
-            -- Delete user-related photos
-            DELETE p
-            FROM photos p
-            INNER JOIN aspnetusers u ON p.AppUserId = u.Id
-            WHERE u.UserName = @username;
-
-            -- Remove user roles
-            DELETE ur
-            FROM aspnetuserroles ur
-            INNER JOIN aspnetusers u ON ur.UserId = u.Id
-            WHERE u.UserName = @username;
-
-            -- Delete user connections
-            DELETE FROM Connections
-            WHERE Username = @username;
-
-            -- Delete sent messages
-            DELETE m
-            FROM Messages m
-            INNER JOIN aspnetusers u ON m.SenderId = u.Id
-            WHERE u.UserName = @username;
-
-            -- Delete received messages
-            DELETE m
-            FROM Messages m
-            INNER JOIN aspnetusers u ON m.RecipientId = u.Id
-            WHERE u.UserName = @username;
-
-            -- Delete the user
-            DELETE u
-            FROM aspnetusers u
-            WHERE u.UserName = @username;
-
-            COMMIT TRANSACTION;
-        ";
-            using (var connection = dapperDbContext.CreateConnection())
-            {
-                await context.Database.ExecuteSqlRawAsync(sql, new { username });
-                return Ok("User and related data deleted");
-                //return user != null;
-            }
-            //var user = await unitOfWork.UserRepository.GetByUsername(username);
-            //var likeparams = new LikesParams
-            //{
-            //    UserId = user.Id,
-            //    Predicate = "liked"
-            //};
-            //var userLike = await unitOfWork.LikesRepository.GetUserLikes(likeparams);
-            //context.Likes.Remove(userLike);
-            //var result = context.Users.Remove(user);
-            //if (await unitOfWork.Complete()) return Ok("User deleted");
-
-            //return BadRequest("Problem in deleting user");
-
-        }
-
         private async Task<bool>UserExists(string username)
         {
             return await userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
