@@ -2,6 +2,7 @@
 using Dapper;
 using Datingapp.API.Data;
 using Datingapp.API.DTO;
+using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
 using Datingapp.API.Models;
 using Microsoft.AspNetCore.Http;
@@ -20,19 +21,21 @@ namespace Datingapp.API.Controllers
         private readonly SignInManager<AppUser> signInManager;
         private readonly DapperDbContext dapperDbContext;
         private readonly ITokenService tokenService;
-        //private readonly DataContext context;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly DataContext context;
         private readonly IMapper mapper;
 
         public AccountController(UserManager<AppUser>userManager, SignInManager<AppUser>signInManager,
-            DapperDbContext dapperDbContext, ITokenService tokenService,
-            //DataContext context, 
+            DapperDbContext dapperDbContext, ITokenService tokenService,IUnitOfWork unitOfWork,
+            DataContext context,
             IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.dapperDbContext = dapperDbContext;
             this.tokenService = tokenService;
-            //this.context = context;
+            this.unitOfWork = unitOfWork;
+            this.context = context;
             this.mapper = mapper;
         }
         [HttpPost("Register")]
@@ -140,6 +143,67 @@ namespace Datingapp.API.Controllers
             //}
         }
 
+        public async Task<ActionResult>DeleteUser(string username)
+        {
+            var sql = @"
+            BEGIN TRANSACTION;
+
+            -- Delete user-related photos
+            DELETE p
+            FROM photos p
+            INNER JOIN aspnetusers u ON p.AppUserId = u.Id
+            WHERE u.UserName = @username;
+
+            -- Remove user roles
+            DELETE ur
+            FROM aspnetuserroles ur
+            INNER JOIN aspnetusers u ON ur.UserId = u.Id
+            WHERE u.UserName = @username;
+
+            -- Delete user connections
+            DELETE FROM Connections
+            WHERE Username = @username;
+
+            -- Delete sent messages
+            DELETE m
+            FROM Messages m
+            INNER JOIN aspnetusers u ON m.SenderId = u.Id
+            WHERE u.UserName = @username;
+
+            -- Delete received messages
+            DELETE m
+            FROM Messages m
+            INNER JOIN aspnetusers u ON m.RecipientId = u.Id
+            WHERE u.UserName = @username;
+
+            -- Delete the user
+            DELETE u
+            FROM aspnetusers u
+            WHERE u.UserName = @username;
+
+            COMMIT TRANSACTION;
+        ";
+            using (var connection = dapperDbContext.CreateConnection())
+            {
+                await context.Database.ExecuteSqlRawAsync(sql, new { username });
+                return Ok("User and related data deleted");
+                //return user != null;
+            }
+            //var user = await unitOfWork.UserRepository.GetByUsername(username);
+            //var likeparams = new LikesParams
+            //{
+            //    UserId = user.Id,
+            //    Predicate = "liked"
+            //};
+            //var userLike = await unitOfWork.LikesRepository.GetUserLikes(likeparams);
+            //context.Likes.Remove(userLike);
+            //var result = context.Users.Remove(user);
+            //if (await unitOfWork.Complete()) return Ok("User deleted");
+
+            //return BadRequest("Problem in deleting user");
+
+        }
+
         private async Task<bool>UserExists(string username)
         {
             return await userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
@@ -153,6 +217,7 @@ namespace Datingapp.API.Controllers
             //}
 
         }
+
             
     }
 }

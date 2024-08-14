@@ -5,6 +5,7 @@ import { User } from '../../_models/user';
 import { AdminService } from '../../_services/admin.service';
 import { BsModalRef, BsModalService, ModalModule, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../../Modals/roles-modal/roles-modal.component';
+import { ConfirmService } from '../../_services/confirm.service';
 
 @Component({
   selector: 'app-user-management',
@@ -18,7 +19,8 @@ export class UserManagementComponent {
   users: Partial<User[]>;
   bsModalRef: BsModalRef;
 
-  constructor(private adminService: AdminService, private modalService: BsModalService){
+  constructor(private adminService: AdminService, private modalService: BsModalService,
+    private confirmService: ConfirmService){
     this.getUsersWithRoles();
   }
 
@@ -74,6 +76,10 @@ export class UserManagementComponent {
       }
     })
     return roles;
+  }
+
+  deleteUser(username:string){
+    this.confirmService.confirm("Confirm delete user?","This cannot be undone")
   }
 
 }
