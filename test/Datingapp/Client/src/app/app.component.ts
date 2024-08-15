@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
@@ -14,7 +15,7 @@ import { PresenceService } from './_services/presence.service';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HttpClientModule, CommonModule,
-     NavComponent,HomeComponent],
+     NavComponent,HomeComponent,FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
