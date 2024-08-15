@@ -1,19 +1,20 @@
-/* src/app/footer/footer.component.css */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1em 0;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+/* footer.component.css */
+footer.footer {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Center align text */
+    padding: 20px; /* Padding around content */
+    font-size: 14px; /* Font size */
+    position: fixed; /* Fix position to the bottom */
+    left: 0; /* Align to the left */
+    bottom: 0; /* Stick to the bottom of the viewport */
+    width: 100%; /* Full width of the viewport */
 }
 
-footer a {
-    color: #fff;
-    text-decoration: none;
+footer.footer p {
+    margin: 10px 0; /* Space between paragraphs */
 }
 
-footer a:hover {
-    text-decoration: underline;
+footer.footer i {
+    margin-right: 8px; /* Space between icon and text */
 }

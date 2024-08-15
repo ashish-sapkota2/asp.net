@@ -1,7 +1,7 @@
-﻿using Datingapp.API.Data;
+﻿using Application_Layer.HelperModels;
+using Datingapp.API.Data;
 using Datingapp.API.DTO;
 using Datingapp.API.Extensions;
-using Datingapp.API.Helpers;
 using Datingapp.API.Interface;
 using Datingapp.API.Models;
 using Microsoft.AspNetCore.Authorization;
