@@ -19,6 +19,7 @@ export class AccountService {
   //as this is observable by convention it uses dollar sign
   currentUser$ = this.currentUserSource.asObservable();
 
+
   constructor(private http: HttpClient,
     private presence: PresenceService,private toastr:ToastrService
   ) { }

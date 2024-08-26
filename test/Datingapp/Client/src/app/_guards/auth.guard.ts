@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, mapToCanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { map, take } from 'rxjs';
+import { catchError, map, of, take, tap } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 
 
@@ -18,13 +18,14 @@ export const authGuard: CanActivateFn = (
     return accountService.currentUser$.pipe(
       take(1),
       map(user=>{
+        console.log('emited User:',user);
        if(user){
+         console.log(user)
          return true;
         }else{
           toastrService.error('You need to login');
-         router.navigate(['/']);
-         console.log("here")
-         return false;
+          router.navigate(['/']);   
+          return false;
        }
       })
     )
