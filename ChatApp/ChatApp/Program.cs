@@ -14,6 +14,17 @@ builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>( ServiceP
 
     new Dictionary<string, UserRoomConnection>());
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
+app.UseCors();
 
 app.UseEndpoints(endpoint =>
 {
