@@ -1,4 +1,6 @@
 using DatingApp_Dapper.Data;
+using DatingApp_Dapper.Interface;
+using DatingApp_Dapper.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddTransient<DapperConnection>(); 
+builder.Services.AddTransient<DapperConnection>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
