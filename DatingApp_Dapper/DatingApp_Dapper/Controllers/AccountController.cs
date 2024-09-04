@@ -35,7 +35,11 @@ namespace DatingApp_Dapper.Controllers
 
             var users = new AppUsers();
             users.UserName = registerDto.Username.ToLower();
-            
+            users.KnownAs= registerDto.KnownAs.ToLower();
+            users.City = registerDto.City.ToLower();
+            users.Country= registerDto.Country.ToLower();
+            users.Gender = registerDto.Gender.ToLower();
+            users.DateOfBirth = registerDto.DateOfBirth;
             users.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
             users.PasswordSalt = hmac.Key;
             context.Users.Add(users);
@@ -52,10 +56,10 @@ namespace DatingApp_Dapper.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var sql = "select * from user where username=@username";
+            var sql = "select * from users where username=@username";
             using (var connection = dapper.CreateConnection())
             {
-                var user = await connection.QueryFirstOrDefaultAsync<AppUsers>(sql, new {username= loginDto.Username });
+                var user = await connection.QueryFirstOrDefaultAsync<AppUsers>(sql, new {loginDto.Username });
                 if(user == null)
                 {
                     return BadRequest("Username doesnot exist");
