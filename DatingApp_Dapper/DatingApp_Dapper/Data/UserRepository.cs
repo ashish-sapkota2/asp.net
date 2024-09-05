@@ -26,12 +26,12 @@ namespace DatingApp_Dapper.Data
             }
         }
 
-        public async Task<ActionResult<MemberDto>> GetByUsername(string username)
+        public async Task<AppUsers> GetByUsername(string username)
         {
             var sql = "select * from users where username =@username";
             using (var connection = dapper.CreateConnection())
             {
-                var task =  await connection.QueryFirstOrDefaultAsync<MemberDto>(sql, new {username});
+                var task =  await connection.QueryFirstOrDefaultAsync<AppUsers>(sql, new {username});
                 return task;
             }
         }

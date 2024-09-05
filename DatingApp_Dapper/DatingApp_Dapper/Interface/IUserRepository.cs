@@ -7,6 +7,6 @@ namespace DatingApp_Dapper.Interface
     public interface IUserRepository
     {
         Task<IEnumerable<MemberDto>> GetAll();
-        Task<ActionResult<MemberDto>> GetByUsername(string username);
+        Task<AppUsers> GetByUsername(string username);
     }
 }
