@@ -9,6 +9,6 @@ namespace Postgres.Data
         {
         
         }
-        public DbSet<Books>books { get; set; }
+        public DbSet<Order>orders { get; set; }
     }
 }
